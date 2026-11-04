@@ -1,0 +1,11 @@
+key,source,owner_panel
+ui.common.cancel,Cancel,CommonDialog
+ui.leaderboard.claim,Claim,LeaderboardPanel
+ui.leaderboard.rank_column,Rank,LeaderboardPanel
+ui.leaderboard.title,Weekly Leaderboard,LeaderboardPanel
+ui.military.rank_badge,Rank,MilitaryPanel
+ui.reward.claim,Claim,RewardPanel
+ui.reward.claim_all,Claim All,RewardPanel
+ui.reward.rank_up,Rank Up,RewardPanel
+ui.reward.title,Victory Rewards,RewardPanel
+ui.settings.sound,Sound,SettingsPanel
