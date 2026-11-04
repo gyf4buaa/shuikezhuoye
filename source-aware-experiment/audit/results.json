@@ -1,0 +1,3240 @@
+{
+  "corpus": {
+    "project": "OpenTTD",
+    "version": "15.3",
+    "commit": "14ec60f248547d4d062a1160f0fc26d742319888",
+    "license": "GPL-2.0",
+    "license_file": "COPYING.md",
+    "repo_url": "https://github.com/OpenTTD/OpenTTD",
+    "archive_url": "https://codeload.github.com/OpenTTD/OpenTTD/tar.gz/14ec60f248547d4d062a1160f0fc26d742319888",
+    "archive_sha256": "df5962cf5fc4938171607a40db69585e2fe3a2a8c8cfe2831862c9e61ff107d7",
+    "extracted_directory": "OpenTTD-14ec60f248547d4d062a1160f0fc26d742319888",
+    "string_table": "src/lang/english.txt",
+    "why_this_project": "A real, mature GPL-2.0 game with a large keyed string table (4721 StringIDs) and source references spread across C++, INI settings templates and base-set metadata. It exercises exact-token, macro, settings-range and computed-StringID retrieval in one pinned checkout, and its translated tables let us test leakage denial.",
+    "not_vendored": "The corpus is downloaded into .corpus/ (gitignored). This repository stores only short evidence quotations with path:line attribution."
+  },
+  "schema": 1,
+  "summary": {
+    "cases": 33,
+    "practical_hits": 28,
+    "practical_correctly_missing": 1,
+    "practical_unresolved_failures": 4,
+    "practical_wrong_associations": 0,
+    "naive_hits": 15,
+    "naive_definition_noise_cases": 33,
+    "naive_confuser_noise_cases": 0,
+    "naive_wrong_associations": 0,
+    "practical_status_counts": {
+      "arithmetic": 10,
+      "direct": 15,
+      "macro": 2,
+      "missing": 5,
+      "settings": 1
+    },
+    "by_category": {
+      "dynamic": {
+        "cases": 11,
+        "practical_hits": 11,
+        "naive_hits": 0
+      },
+      "missing": {
+        "cases": 5,
+        "practical_hits": 0,
+        "naive_hits": 0
+      },
+      "placeholder": {
+        "cases": 8,
+        "practical_hits": 8,
+        "naive_hits": 8
+      },
+      "resource_binding": {
+        "cases": 1,
+        "practical_hits": 1,
+        "naive_hits": 1
+      },
+      "same_text": {
+        "cases": 8,
+        "practical_hits": 8,
+        "naive_hits": 6
+      }
+    }
+  },
+  "locator": {
+    "project": "OpenTTD",
+    "keys": 4721,
+    "evidence_files": 1324,
+    "cargo_keys": 128,
+    "settings_keys": 247,
+    "family_keys": 139,
+    "vehicle_name_partial_bases": 4,
+    "status_counts": {
+      "arithmetic": 124,
+      "direct": 3795,
+      "dynamic_unresolved": 252,
+      "macro": 120,
+      "missing": 355,
+      "settings": 75
+    }
+  },
+  "cases": [
+    {
+      "id": "placeholder.plane_crash",
+      "key": "STR_NEWS_PLANE_CRASH_OUT_OF_FUEL",
+      "category": "placeholder",
+      "text": "{BIG_FONT}{BLACK}Plane Crash!{}Aircraft ran out of fuel, {COMMA} die in fireball",
+      "expected_context": "News headline when an aircraft crashes because it could not reach an airport. The {COMMA} argument is the number of victims; the sentence is a complete exclamation, not a tooltip.",
+      "expected_locations": [
+        "src/aircraft_cmd.cpp:1361"
+      ],
+      "notes": "GetEncodedString passes `victims` directly; the {COMMA} count is a death toll.",
+      "placeholders": [
+        {
+          "token": "BIG_FONT",
+          "kind": "style"
+        },
+        {
+          "token": "BLACK",
+          "kind": "style"
+        },
+        {
+          "token": "",
+          "kind": "style"
+        },
+        {
+          "token": "COMMA",
+          "kind": "data"
+        }
+      ],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 1361,
+            "kind": "call:GetEncodedString",
+            "scope": "static void CrashAirplane(Aircraft *v)",
+            "call": "GetEncodedString",
+            "args": [
+              "STR_NEWS_PLANE_CRASH_OUT_OF_FUEL",
+              "victims"
+            ],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 2,
+        "sites": [
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 1361
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 873
+          }
+        ]
+      }
+    },
+    {
+      "id": "placeholder.company_merger",
+      "key": "STR_NEWS_COMPANY_MERGER_DESCRIPTION",
+      "category": "placeholder",
+      "text": "{BIG_FONT}{BLACK}{RAW_STRING} has been sold to {RAW_STRING} for {CURRENCY_LONG}!",
+      "expected_context": "News body for a friendly company acquisition: the first {RAW_STRING} is the buying company, the second the acquired company, and {CURRENCY_LONG} the sale price.",
+      "expected_locations": [
+        "src/economy.cpp:1993"
+      ],
+      "notes": "The sibling takeover headline uses the same two company names but no price.",
+      "placeholders": [
+        {
+          "token": "BIG_FONT",
+          "kind": "style"
+        },
+        {
+          "token": "BLACK",
+          "kind": "style"
+        },
+        {
+          "token": "RAW_STRING",
+          "kind": "data"
+        },
+        {
+          "token": "RAW_STRING",
+          "kind": "data"
+        },
+        {
+          "token": "CURRENCY_LONG",
+          "kind": "data"
+        }
+      ],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/economy.cpp",
+            "line": 1993,
+            "kind": "call:GetEncodedString",
+            "scope": "static void DoAcquireCompany(Company *c, bool hostile_takeover)",
+            "call": "GetEncodedString",
+            "args": [
+              "STR_NEWS_COMPANY_MERGER_DESCRIPTION",
+              "cni->company_name",
+              "cni->other_company_name",
+              "c->bankrupt_value"
+            ],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 2,
+        "sites": [
+          {
+            "path": "src/economy.cpp",
+            "line": 1993
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 886
+          }
+        ]
+      }
+    },
+    {
+      "id": "placeholder.measure_length",
+      "key": "STR_MEASURE_LENGTH",
+      "category": "placeholder",
+      "text": "{BLACK}Length: {NUM}",
+      "expected_context": "Measurement tooltip while dragging in the viewport. {NUM} is a distance in tiles, prefixed by a black text-colour code.",
+      "expected_locations": [
+        "src/viewport.cpp:2865"
+      ],
+      "notes": "The height-difference variant is a different key and must remain separate.",
+      "placeholders": [
+        {
+          "token": "BLACK",
+          "kind": "style"
+        },
+        {
+          "token": "NUM",
+          "kind": "data"
+        }
+      ],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/viewport.cpp",
+            "line": 2865,
+            "kind": "call:GetEncodedString",
+            "scope": "void VpSetPresizeRange(TileIndex from, TileIndex to)",
+            "call": "GetEncodedString",
+            "args": [
+              "STR_MEASURE_LENGTH",
+              "distance"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/viewport.cpp",
+            "line": 3272,
+            "kind": "call:GetEncodedString",
+            "scope": null,
+            "call": "GetEncodedString",
+            "args": [
+              "STR_MEASURE_LENGTH",
+              "distance"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/viewport.cpp",
+            "line": 3369,
+            "kind": "call:GetEncodedString",
+            "scope": "void VpSelectTilesWithMethod(int x, int y, ViewportPlaceMethod method)",
+            "call": "GetEncodedString",
+            "args": [
+              "STR_MEASURE_LENGTH",
+              "distance"
+            ],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 8,
+        "sites": [
+          {
+            "path": "src/viewport.cpp",
+            "line": 2865
+          },
+          {
+            "path": "src/viewport.cpp",
+            "line": 3272
+          },
+          {
+            "path": "src/viewport.cpp",
+            "line": 3274
+          },
+          {
+            "path": "src/viewport.cpp",
+            "line": 3369
+          },
+          {
+            "path": "src/viewport.cpp",
+            "line": 3371
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 322
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 324
+          },
+          {
+            "path": "src/script/api/script_bridgelist.cpp",
+            "line": 24
+          }
+        ]
+      }
+    },
+    {
+      "id": "placeholder.performance_percent",
+      "key": "STR_PERFORMANCE_DETAIL_PERCENT",
+      "category": "placeholder",
+      "text": "{WHITE}{NUM}%",
+      "expected_context": "Percentage bar in the company performance detail graph. {NUM} is a clamped 0-100 percentage, not a raw score.",
+      "expected_locations": [
+        "src/graph_gui.cpp:1596"
+      ],
+      "notes": "Another call site uses GetParamMaxValue for layout measurement.",
+      "placeholders": [
+        {
+          "token": "WHITE",
+          "kind": "style"
+        },
+        {
+          "token": "NUM",
+          "kind": "data"
+        }
+      ],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/graph_gui.cpp",
+            "line": 1501,
+            "kind": "call:GetString",
+            "scope": "void UpdateCompanyStats()",
+            "call": "GetString",
+            "args": [
+              "STR_PERFORMANCE_DETAIL_PERCENT",
+              "GetParamMaxValue(100)"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/graph_gui.cpp",
+            "line": 1596,
+            "kind": "call:GetString",
+            "scope": "void UpdateCompanyStats()",
+            "call": "GetString",
+            "args": [
+              "STR_PERFORMANCE_DETAIL_PERCENT",
+              "Clamp<int64_t>(val, 0, needed) * 100 / needed"
+            ],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 3,
+        "sites": [
+          {
+            "path": "src/graph_gui.cpp",
+            "line": 1501
+          },
+          {
+            "path": "src/graph_gui.cpp",
+            "line": 1596
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 682
+          }
+        ]
+      }
+    },
+    {
+      "id": "placeholder.league_rank",
+      "key": "STR_COMPANY_LEAGUE_COMPANY_RANK",
+      "category": "placeholder",
+      "text": "{YELLOW}#{NUM}",
+      "expected_context": "Rank cell in the company league table. {NUM} is a 1-based position (rank + 1), so the translator must not assume a zero-based index.",
+      "expected_locations": [
+        "src/league_gui.cpp:335"
+      ],
+      "notes": "The same key is also measured with GetStringBoundingBox at line 362.",
+      "placeholders": [
+        {
+          "token": "YELLOW",
+          "kind": "style"
+        },
+        {
+          "token": "NUM",
+          "kind": "data"
+        }
+      ],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/league_gui.cpp",
+            "line": 119,
+            "kind": "call:GetString",
+            "scope": "static bool PerformanceSorter(const Company * const &c1, const Company * const &c2)",
+            "call": "GetString",
+            "args": [
+              "STR_COMPANY_LEAGUE_COMPANY_RANK",
+              "i + 1"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/league_gui.cpp",
+            "line": 134,
+            "kind": "call:GetString",
+            "scope": "static bool PerformanceSorter(const Company * const &c1, const Company * const &c2)",
+            "call": "GetString",
+            "args": [
+              "STR_COMPANY_LEAGUE_COMPANY_RANK",
+              "i + 1"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/league_gui.cpp",
+            "line": 335,
+            "kind": "call:GetString",
+            "scope": "void BuildTable()",
+            "call": "GetString",
+            "args": [
+              "STR_COMPANY_LEAGUE_COMPANY_RANK",
+              "rank + 1"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/league_gui.cpp",
+            "line": 362,
+            "kind": "call:GetString",
+            "scope": "void BuildTable()",
+            "call": "GetString",
+            "args": [
+              "STR_COMPANY_LEAGUE_COMPANY_RANK",
+              "rank + 1"
+            ],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 5,
+        "sites": [
+          {
+            "path": "src/league_gui.cpp",
+            "line": 119
+          },
+          {
+            "path": "src/league_gui.cpp",
+            "line": 134
+          },
+          {
+            "path": "src/league_gui.cpp",
+            "line": 335
+          },
+          {
+            "path": "src/league_gui.cpp",
+            "line": 362
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 666
+          }
+        ]
+      }
+    },
+    {
+      "id": "placeholder.smallmap_industry",
+      "key": "STR_SMALLMAP_INDUSTRY",
+      "category": "placeholder",
+      "text": "{TINY_FONT}{STRING} ({NUM})",
+      "expected_context": "Small-map legend entry for industries. {STRING} is the industry legend label and {NUM} is the pool's maximum size, not a live count.",
+      "expected_locations": [
+        "src/smallmap_gui.cpp:1537"
+      ],
+      "notes": "A later switch branch also assigns the key without arguments.",
+      "placeholders": [
+        {
+          "token": "TINY_FONT",
+          "kind": "style"
+        },
+        {
+          "token": "STRING",
+          "kind": "data"
+        },
+        {
+          "token": "NUM",
+          "kind": "data"
+        }
+      ],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/smallmap_gui.cpp",
+            "line": 1537,
+            "kind": "call:GetString",
+            "scope": "Point GetStationMiddle(const Station *st) const",
+            "call": "GetString",
+            "args": [
+              "STR_SMALLMAP_INDUSTRY",
+              "tbl->legend",
+              "IndustryPool::MAX_SIZE"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/smallmap_gui.cpp",
+            "line": 1624,
+            "kind": "reference",
+            "scope": "Point GetStationMiddle(const Station *st) const",
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/smallmap_gui.cpp",
+            "line": 1653,
+            "kind": "comment",
+            "scope": "Point GetStationMiddle(const Station *st) const",
+            "call": null,
+            "args": [],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 4,
+        "sites": [
+          {
+            "path": "src/smallmap_gui.cpp",
+            "line": 1537
+          },
+          {
+            "path": "src/smallmap_gui.cpp",
+            "line": 1624
+          },
+          {
+            "path": "src/smallmap_gui.cpp",
+            "line": 1653
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 826
+          }
+        ]
+      }
+    },
+    {
+      "id": "placeholder.industry_construction",
+      "key": "STR_NEWS_INDUSTRY_CONSTRUCTION",
+      "category": "placeholder",
+      "text": "{BIG_FONT}{BLACK}New {STRING} under construction near {TOWN}!",
+      "expected_context": "News message emitted when an industry is built. {STRING} is the industry name and {TOWN} is the nearby town. The table row assigns it to IndustrySpec::new_industry_text.",
+      "expected_locations": [
+        "src/table/build_industry.h:1158"
+      ],
+      "notes": "The actual runtime call is industry_cmd.cpp:1719, reached through the new_industry_text field; the field indirection is not followed by the current locator. Verified manually.",
+      "placeholders": [
+        {
+          "token": "BIG_FONT",
+          "kind": "style"
+        },
+        {
+          "token": "BLACK",
+          "kind": "style"
+        },
+        {
+          "token": "STRING",
+          "kind": "data"
+        },
+        {
+          "token": "TOWN",
+          "kind": "data"
+        }
+      ],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1158,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1168,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1178,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1198,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1208,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1218,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1228,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1238,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1248,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1258,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1268,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1278,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1288,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1298,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1308,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1318,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1328,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1338,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1368,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1378,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1388,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1398,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1408,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1428,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1438,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1448,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1458,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1468,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1478,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1488,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1498,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1508,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1518,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/newgrf/newgrf_stringmapping.cpp",
+            "line": 103,
+            "kind": "compat_mapping",
+            "scope": "static StringID TTDPStringIDToOTTDStringIDMapping(GRFStringID str)",
+            "call": "TEXTID_TO_STRINGID",
+            "args": [
+              "0x482D",
+              "0x482E",
+              "STR_NEWS_INDUSTRY_CONSTRUCTION",
+              "STR_NEWS_INDUSTRY_PLANTED"
+            ],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 35,
+        "sites": [
+          {
+            "path": "src/newgrf/newgrf_stringmapping.cpp",
+            "line": 103
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1158
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1168
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1178
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1198
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1208
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1218
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1228
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1238
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1248
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1258
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1268
+          }
+        ]
+      }
+    },
+    {
+      "id": "placeholder.config_setting_label",
+      "key": "STR_CONFIG_SETTING_NOSERVICE",
+      "category": "placeholder",
+      "text": "Disable servicing when breakdowns set to none: {STRING2}",
+      "expected_context": "Label of the 'Disable servicing when breakdowns set to none' advanced setting. {STRING2} is inserted by the settings GUI when the setting is disabled.",
+      "expected_locations": [
+        "src/table/settings/game_settings.ini:65"
+      ],
+      "notes": "A settings-template reference, not C++ code.",
+      "placeholders": [
+        {
+          "token": "STRING2",
+          "kind": "data"
+        }
+      ],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/table/settings/game_settings.ini",
+            "line": 65,
+            "kind": "settings_field",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 4,
+        "sites": [
+          {
+            "path": "src/table/settings/game_settings.ini",
+            "line": 65
+          },
+          {
+            "path": "src/table/settings/game_settings.ini",
+            "line": 66
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 1890
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 1891
+          }
+        ]
+      }
+    },
+    {
+      "id": "same_text.cargo_plural",
+      "key": "STR_CARGO_PLURAL_COAL",
+      "category": "same_text",
+      "text": "Coal",
+      "expected_context": "Plural cargo name 'Coal', bound to CargoSpec::name through the MK_STR_CARGO_PLURAL token-pasting macro. Used where a quantity of coal is described, not where one unit is named.",
+      "expected_locations": [
+        "src/table/cargo_const.h:59"
+      ],
+      "notes": "Both keys display 'Coal'; the plural/singular slot is the only distinction.",
+      "placeholders": [],
+      "practical": {
+        "status": "macro",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/table/cargo_const.h",
+            "line": 16,
+            "kind": "macro_definition",
+            "scope": "preprocessor",
+            "call": null,
+            "args": [],
+            "relation": "MK_STR_CARGO_PLURAL(label_plural) expands to STR_CARGO_PLURAL_<label_plural>; the argument is pasted after the prefix"
+          },
+          {
+            "path": "src/table/cargo_const.h",
+            "line": 59,
+            "kind": "cargo_table_row",
+            "scope": "_default_cargo[]",
+            "call": "MK",
+            "args": [
+              "1",
+              "CT_COAL",
+              "6",
+              "16",
+              "0x100",
+              "5916",
+              "7",
+              "255",
+              "true",
+              "TAE_NONE",
+              "COAL",
+              "COAL",
+              "STR_TONS",
+              "CargoClasses({CargoClass::Bulk, CargoClass::NonPotable})"
+            ],
+            "relation": "row for cargo label CT_COAL; plural name slot uses argument 'COAL'"
+          }
+        ],
+        "notes": [
+          "Reached through a token-pasting cargo macro; the row was parsed from the CargoSpec table."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 31,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 29
+          },
+          {
+            "path": "src/cargotype.h",
+            "line": 54
+          },
+          {
+            "path": "src/disaster_vehicle.cpp",
+            "line": 880
+          },
+          {
+            "path": "src/disaster_vehicle.cpp",
+            "line": 883
+          },
+          {
+            "path": "src/disaster_vehicle.cpp",
+            "line": 923
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 305
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 326
+          },
+          {
+            "path": "src/script/api/script_cargo.hpp",
+            "line": 32
+          },
+          {
+            "path": "src/script/api/script_town.hpp",
+            "line": 277
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1541
+          },
+          {
+            "path": "src/table/engines.h",
+            "line": 136
+          },
+          {
+            "path": "src/table/engines.h",
+            "line": 166
+          }
+        ]
+      }
+    },
+    {
+      "id": "same_text.cargo_singular",
+      "key": "STR_CARGO_SINGULAR_COAL",
+      "category": "same_text",
+      "text": "Coal",
+      "expected_context": "Singular cargo name 'Coal', bound to CargoSpec::name_single through MK_STR_CARGO_SINGULAR. Used for one unit / a singular noun context.",
+      "expected_locations": [
+        "src/table/cargo_const.h:59"
+      ],
+      "notes": "Same English text and same table row as the plural key.",
+      "placeholders": [],
+      "practical": {
+        "status": "macro",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/table/cargo_const.h",
+            "line": 17,
+            "kind": "macro_definition",
+            "scope": "preprocessor",
+            "call": null,
+            "args": [],
+            "relation": "MK_STR_CARGO_SINGULAR(label_singular) expands to STR_CARGO_SINGULAR_<label_singular>; the argument is pasted after the prefix"
+          },
+          {
+            "path": "src/table/cargo_const.h",
+            "line": 59,
+            "kind": "cargo_table_row",
+            "scope": "_default_cargo[]",
+            "call": "MK",
+            "args": [
+              "1",
+              "CT_COAL",
+              "6",
+              "16",
+              "0x100",
+              "5916",
+              "7",
+              "255",
+              "true",
+              "TAE_NONE",
+              "COAL",
+              "COAL",
+              "STR_TONS",
+              "CargoClasses({CargoClass::Bulk, CargoClass::NonPotable})"
+            ],
+            "relation": "row for cargo label CT_COAL; singular name slot uses argument 'COAL'"
+          }
+        ],
+        "notes": [
+          "Reached through a token-pasting cargo macro; the row was parsed from the CargoSpec table."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 31,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 63
+          },
+          {
+            "path": "src/cargotype.h",
+            "line": 54
+          },
+          {
+            "path": "src/disaster_vehicle.cpp",
+            "line": 880
+          },
+          {
+            "path": "src/disaster_vehicle.cpp",
+            "line": 883
+          },
+          {
+            "path": "src/disaster_vehicle.cpp",
+            "line": 923
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 305
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 326
+          },
+          {
+            "path": "src/script/api/script_cargo.hpp",
+            "line": 32
+          },
+          {
+            "path": "src/script/api/script_town.hpp",
+            "line": 277
+          },
+          {
+            "path": "src/table/build_industry.h",
+            "line": 1541
+          },
+          {
+            "path": "src/table/engines.h",
+            "line": 136
+          },
+          {
+            "path": "src/table/engines.h",
+            "line": 166
+          }
+        ]
+      }
+    },
+    {
+      "id": "same_text.colour_default",
+      "key": "STR_COLOUR_DEFAULT",
+      "category": "same_text",
+      "text": "Default",
+      "expected_context": "'Default' entry of the company livery colour dropdown; it is not the NewGRF station-class default or a vehicle service interval.",
+      "expected_locations": [
+        "src/company_gui.cpp:595"
+      ],
+      "notes": "Three distinct keys share the string 'Default'.",
+      "placeholders": [],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/company_gui.cpp",
+            "line": 595,
+            "kind": "reference",
+            "scope": "DropDownIcon<DropDownString<DropDownListItem>>(TSprite, GetColourPalette(static_cast<Colours>(colour % COLOUR_END)), GetString(colour < COLOUR_END ? (STR_COLOUR_DARK_BLUE + colour) : STR_COLOUR_DEFAUL",
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 780,
+            "kind": "call:GetStringBoundingBox",
+            "scope": "void SetSelectedGroup(CompanyID company, GroupID group)",
+            "call": "GetStringBoundingBox",
+            "args": [
+              "STR_COLOUR_DEFAULT"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 810,
+            "kind": "reference",
+            "scope": "void SetSelectedGroup(CompanyID company, GroupID group)",
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 876,
+            "kind": "reference",
+            "scope": "void SetSelectedGroup(CompanyID company, GroupID group)",
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 881,
+            "kind": "reference",
+            "scope": "void SetSelectedGroup(CompanyID company, GroupID group)",
+            "call": null,
+            "args": [],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 106,
+        "sites": [
+          {
+            "path": "src/company_gui.cpp",
+            "line": 595
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 780
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 810
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 876
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 881
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 172
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 300
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 309
+          },
+          {
+            "path": "src/airport_gui.cpp",
+            "line": 221
+          },
+          {
+            "path": "src/airport_gui.cpp",
+            "line": 628
+          },
+          {
+            "path": "src/articulated_vehicles.cpp",
+            "line": 104
+          },
+          {
+            "path": "src/articulated_vehicles.cpp",
+            "line": 107
+          }
+        ]
+      }
+    },
+    {
+      "id": "same_text.station_class_default",
+      "key": "STR_STATION_CLASS_DFLT",
+      "category": "same_text",
+      "text": "Default",
+      "expected_context": "Name of the built-in default station class in the NewGRF class list, not a colour or service-interval option.",
+      "expected_locations": [
+        "src/newgrf_station.cpp:39"
+      ],
+      "notes": "Road stops have a parallel assignment at newgrf_roadstop.cpp:39.",
+      "placeholders": [],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/newgrf_roadstop.cpp",
+            "line": 39,
+            "kind": "reference",
+            "scope": "void RoadStopClass::InsertDefaults()",
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/newgrf_station.cpp",
+            "line": 39,
+            "kind": "reference",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 107,
+        "sites": [
+          {
+            "path": "src/newgrf_roadstop.cpp",
+            "line": 39
+          },
+          {
+            "path": "src/newgrf_station.cpp",
+            "line": 39
+          },
+          {
+            "path": "src/rail_gui.cpp",
+            "line": 1014
+          },
+          {
+            "path": "src/road_gui.cpp",
+            "line": 1245
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 2887
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 2888
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 2889
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 300
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 309
+          },
+          {
+            "path": "src/airport_gui.cpp",
+            "line": 221
+          },
+          {
+            "path": "src/airport_gui.cpp",
+            "line": 628
+          },
+          {
+            "path": "src/articulated_vehicles.cpp",
+            "line": 104
+          }
+        ]
+      }
+    },
+    {
+      "id": "same_text.vehicle_interval_default",
+      "key": "STR_VEHICLE_DETAILS_DEFAULT",
+      "category": "same_text",
+      "text": "Default",
+      "expected_context": "'Default' choice in the vehicle servicing-interval dropdown; it means 'use the vehicle's default interval', not a colour or station class.",
+      "expected_locations": [
+        "src/vehicle_gui.cpp:2393"
+      ],
+      "notes": "The same key appears in the calendar and wall-clock dropdown arrays.",
+      "placeholders": [],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/vehicle_gui.cpp",
+            "line": 2393,
+            "kind": "reference",
+            "scope": "void ShowVehicleListWindow(CompanyID company, VehicleType vehicle_type, TileIndex depot_tile)",
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/vehicle_gui.cpp",
+            "line": 2399,
+            "kind": "reference",
+            "scope": "void ShowVehicleListWindow(CompanyID company, VehicleType vehicle_type, TileIndex depot_tile)",
+            "call": null,
+            "args": [],
+            "relation": null
+          },
+          {
+            "path": "src/vehicle_gui.cpp",
+            "line": 2699,
+            "kind": "reference",
+            "scope": "static void DrawVehicleDetails(const Vehicle *v, const Rect &r, int vscroll_pos, uint vscroll_cap, TrainDetailsWindowTabs det_tab)",
+            "call": null,
+            "args": [],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 104,
+        "sites": [
+          {
+            "path": "src/vehicle_gui.cpp",
+            "line": 2393
+          },
+          {
+            "path": "src/vehicle_gui.cpp",
+            "line": 2399
+          },
+          {
+            "path": "src/vehicle_gui.cpp",
+            "line": 2699
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 4562
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 300
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 309
+          },
+          {
+            "path": "src/airport_gui.cpp",
+            "line": 221
+          },
+          {
+            "path": "src/airport_gui.cpp",
+            "line": 628
+          },
+          {
+            "path": "src/articulated_vehicles.cpp",
+            "line": 104
+          },
+          {
+            "path": "src/articulated_vehicles.cpp",
+            "line": 107
+          },
+          {
+            "path": "src/articulated_vehicles.cpp",
+            "line": 108
+          },
+          {
+            "path": "src/articulated_vehicles.cpp",
+            "line": 125
+          }
+        ]
+      }
+    },
+    {
+      "id": "same_text.none_generic",
+      "key": "STR_NONE",
+      "category": "same_text",
+      "text": "None",
+      "expected_context": "Generic 'None' item used to clear a dropdown (for example the rail-type dropdown), not the 'group by none' label or a setting-specific 'None'.",
+      "expected_locations": [
+        "src/road_gui.cpp:1824"
+      ],
+      "notes": "Seventeen keys display 'None'; direct-key retrieval must not merge them.",
+      "placeholders": [],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/newgrf_gui.cpp",
+            "line": 940,
+            "kind": "call:MakeDropDownListStringItem",
+            "scope": "inline PaletteID GetPalette(const GRFConfig &c) const",
+            "call": "MakeDropDownListStringItem",
+            "args": [
+              "STR_NONE",
+              "-1"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/rail_gui.cpp",
+            "line": 2084,
+            "kind": "call:MakeDropDownListStringItem",
+            "scope": "DropDownList GetRailTypeDropDownList(bool for_replacement, bool all_option)",
+            "call": "MakeDropDownListStringItem",
+            "args": [
+              "STR_NONE",
+              "INVALID_RAILTYPE",
+              "true"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/road_gui.cpp",
+            "line": 1824,
+            "kind": "call:MakeDropDownListStringItem",
+            "scope": "DropDownList GetRoadTypeDropDownList(RoadTramTypes rtts, bool for_replacement, bool all_option)",
+            "call": "MakeDropDownListStringItem",
+            "args": [
+              "STR_NONE",
+              "INVALID_ROADTYPE",
+              "true"
+            ],
+            "relation": null
+          },
+          {
+            "path": "src/road_gui.cpp",
+            "line": 1867,
+            "kind": "call:MakeDropDownListStringItem",
+            "scope": "DropDownList GetScenRoadTypeDropDownList(RoadTramTypes rtts)",
+            "call": "MakeDropDownListStringItem",
+            "args": [
+              "STR_NONE",
+              "-1",
+              "true"
+            ],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 93,
+        "sites": [
+          {
+            "path": "src/newgrf_gui.cpp",
+            "line": 940
+          },
+          {
+            "path": "src/rail_gui.cpp",
+            "line": 2084
+          },
+          {
+            "path": "src/road_gui.cpp",
+            "line": 1824
+          },
+          {
+            "path": "src/road_gui.cpp",
+            "line": 1867
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 1173
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 30
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 34
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 66
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 67
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 84
+          },
+          {
+            "path": "src/animated_tile_map.h",
+            "line": 20
+          },
+          {
+            "path": "src/blitter/32bpp_base.cpp",
+            "line": 145
+          }
+        ]
+      }
+    },
+    {
+      "id": "same_text.group_by_none",
+      "key": "STR_GROUP_BY_NONE",
+      "category": "same_text",
+      "text": "None",
+      "expected_context": "'None' option in the vehicle list's group-by selector, meaning 'do not group'.",
+      "expected_locations": [
+        "src/vehicle_gui.cpp:155"
+      ],
+      "notes": "Initializer-list entry, not a call argument.",
+      "placeholders": [],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/vehicle_gui.cpp",
+            "line": 155,
+            "kind": "reference",
+            "scope": "static bool VehicleIndividualToGroupSorterWrapper(GUIVehicleGroup const &a, GUIVehicleGroup const &b)",
+            "call": null,
+            "args": [],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 90,
+        "sites": [
+          {
+            "path": "src/vehicle_gui.cpp",
+            "line": 155
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 377
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 30
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 34
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 66
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 67
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 84
+          },
+          {
+            "path": "src/animated_tile_map.h",
+            "line": 20
+          },
+          {
+            "path": "src/blitter/32bpp_base.cpp",
+            "line": 145
+          },
+          {
+            "path": "src/blitter/base.hpp",
+            "line": 51
+          },
+          {
+            "path": "src/blitter/null.hpp",
+            "line": 32
+          },
+          {
+            "path": "src/company_cmd.cpp",
+            "line": 744
+          }
+        ]
+      }
+    },
+    {
+      "id": "same_text.config_none",
+      "key": "STR_CONFIG_SETTING_NONE",
+      "category": "same_text",
+      "text": "None",
+      "expected_context": "'None' value label of the smoke-amount setting dropdown; it is a settings enum label, not a generic dropdown clear item.",
+      "expected_locations": [
+        "src/table/settings/game_settings.ini:235"
+      ],
+      "notes": "Referenced as strval in a settings template.",
+      "placeholders": [],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/table/settings/game_settings.ini",
+            "line": 235,
+            "kind": "settings_field",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 90,
+        "sites": [
+          {
+            "path": "src/table/settings/game_settings.ini",
+            "line": 235
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 1296
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 30
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 34
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 66
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 67
+          },
+          {
+            "path": "src/animated_tile.cpp",
+            "line": 84
+          },
+          {
+            "path": "src/animated_tile_map.h",
+            "line": 20
+          },
+          {
+            "path": "src/blitter/32bpp_base.cpp",
+            "line": 145
+          },
+          {
+            "path": "src/blitter/base.hpp",
+            "line": 51
+          },
+          {
+            "path": "src/blitter/null.hpp",
+            "line": 32
+          },
+          {
+            "path": "src/company_cmd.cpp",
+            "line": 744
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.colour_pale_green",
+      "key": "STR_COLOUR_PALE_GREEN",
+      "category": "dynamic",
+      "text": "Pale Green",
+      "expected_context": "One of the 16 company colour names in the livery colour dropdown. It has no direct token use: the code computes STR_COLOUR_DARK_BLUE + colour where colour is a Colours enum value.",
+      "expected_locations": [
+        "src/company_gui.cpp:595"
+      ],
+      "notes": "StringID contiguous with the Colours enum; verified by the locator.",
+      "placeholders": [],
+      "practical": {
+        "status": "arithmetic",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/company_gui.cpp",
+            "line": 595,
+            "kind": "arithmetic_base",
+            "scope": "DropDownIcon<DropDownString<DropDownListItem>>(TSprite, GetColourPalette(static_cast<Colours>(colour % COLOUR_END)), GetString(colour < COLOUR_END ? (STR_COLOUR_DARK_BLUE + colour) : STR_COLOUR_DEFAUL",
+            "call": null,
+            "args": [
+              "STR_COLOUR_DARK_BLUE + colour"
+            ],
+            "relation": "computed StringID: STR_COLOUR_DARK_BLUE + colour"
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 778,
+            "kind": "arithmetic_base",
+            "scope": "void SetSelectedGroup(CompanyID company, GroupID group)",
+            "call": "GetStringBoundingBox",
+            "args": [
+              "STR_COLOUR_DARK_BLUE + colour"
+            ],
+            "relation": "computed StringID: STR_COLOUR_DARK_BLUE + colour"
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 876,
+            "kind": "arithmetic_base",
+            "scope": "void SetSelectedGroup(CompanyID company, GroupID group)",
+            "call": null,
+            "args": [],
+            "relation": "computed StringID: STR_COLOUR_DARK_BLUE + livery.colour1"
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 881,
+            "kind": "arithmetic_base",
+            "scope": "void SetSelectedGroup(CompanyID company, GroupID group)",
+            "call": null,
+            "args": [],
+            "relation": "computed StringID: STR_COLOUR_DARK_BLUE + livery.colour2"
+          },
+          {
+            "path": "src/console_cmds.cpp",
+            "line": 1956,
+            "kind": "arithmetic_base",
+            "scope": "static bool ConCompanies(std::span<std::string_view> argv)",
+            "call": "GetString",
+            "args": [
+              "STR_COLOUR_DARK_BLUE + _company_colours[c->index]"
+            ],
+            "relation": "computed StringID: STR_COLOUR_DARK_BLUE + _company_colours[c->index]"
+          }
+        ],
+        "notes": [
+          "StringID = STR_COLOUR_DARK_BLUE + 1 (company colour names); candidate verified contiguous."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 2,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 175
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 194
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.colour_grey",
+      "key": "STR_COLOUR_GREY",
+      "category": "dynamic",
+      "text": "Grey",
+      "expected_context": "Grey company colour name, reached only through the same STR_COLOUR_DARK_BLUE + colour computed StringID.",
+      "expected_locations": [
+        "src/company_gui.cpp:595"
+      ],
+      "notes": "No direct token reference elsewhere.",
+      "placeholders": [],
+      "practical": {
+        "status": "arithmetic",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/company_gui.cpp",
+            "line": 595,
+            "kind": "arithmetic_base",
+            "scope": "DropDownIcon<DropDownString<DropDownListItem>>(TSprite, GetColourPalette(static_cast<Colours>(colour % COLOUR_END)), GetString(colour < COLOUR_END ? (STR_COLOUR_DARK_BLUE + colour) : STR_COLOUR_DEFAUL",
+            "call": null,
+            "args": [
+              "STR_COLOUR_DARK_BLUE + colour"
+            ],
+            "relation": "computed StringID: STR_COLOUR_DARK_BLUE + colour"
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 778,
+            "kind": "arithmetic_base",
+            "scope": "void SetSelectedGroup(CompanyID company, GroupID group)",
+            "call": "GetStringBoundingBox",
+            "args": [
+              "STR_COLOUR_DARK_BLUE + colour"
+            ],
+            "relation": "computed StringID: STR_COLOUR_DARK_BLUE + colour"
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 876,
+            "kind": "arithmetic_base",
+            "scope": "void SetSelectedGroup(CompanyID company, GroupID group)",
+            "call": null,
+            "args": [],
+            "relation": "computed StringID: STR_COLOUR_DARK_BLUE + livery.colour1"
+          },
+          {
+            "path": "src/company_gui.cpp",
+            "line": 881,
+            "kind": "arithmetic_base",
+            "scope": "void SetSelectedGroup(CompanyID company, GroupID group)",
+            "call": null,
+            "args": [],
+            "relation": "computed StringID: STR_COLOUR_DARK_BLUE + livery.colour2"
+          },
+          {
+            "path": "src/console_cmds.cpp",
+            "line": 1956,
+            "kind": "arithmetic_base",
+            "scope": "static bool ConCompanies(std::span<std::string_view> argv)",
+            "call": "GetString",
+            "args": [
+              "STR_COLOUR_DARK_BLUE + _company_colours[c->index]"
+            ],
+            "relation": "computed StringID: STR_COLOUR_DARK_BLUE + _company_colours[c->index]"
+          }
+        ],
+        "notes": [
+          "StringID = STR_COLOUR_DARK_BLUE + 14 (company colour names); candidate verified contiguous."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 23,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 188
+          },
+          {
+            "path": "src/blitter/32bpp_anim.cpp",
+            "line": 310
+          },
+          {
+            "path": "src/blitter/32bpp_base.hpp",
+            "line": 121
+          },
+          {
+            "path": "src/blitter/32bpp_base.hpp",
+            "line": 142
+          },
+          {
+            "path": "src/blitter/32bpp_simple.cpp",
+            "line": 107
+          },
+          {
+            "path": "src/blitter/40bpp_anim.cpp",
+            "line": 381
+          },
+          {
+            "path": "src/heightmap.cpp",
+            "line": 66
+          },
+          {
+            "path": "src/heightmap.cpp",
+            "line": 69
+          },
+          {
+            "path": "src/heightmap.cpp",
+            "line": 100
+          },
+          {
+            "path": "src/heightmap.cpp",
+            "line": 127
+          },
+          {
+            "path": "src/heightmap.cpp",
+            "line": 217
+          },
+          {
+            "path": "src/heightmap.cpp",
+            "line": 250
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.goal_ok",
+      "key": "STR_GOAL_QUESTION_BUTTON_OK",
+      "category": "dynamic",
+      "text": "OK",
+      "expected_context": "OK button label on a goal question window. Buttons are chosen at runtime from a table of button identifiers and rendered as STR_GOAL_QUESTION_BUTTON_CANCEL + button index.",
+      "expected_locations": [
+        "src/goal_gui.cpp:353"
+      ],
+      "notes": "The same expression is used for three button slots.",
+      "placeholders": [],
+      "practical": {
+        "status": "arithmetic",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/goal_gui.cpp",
+            "line": 353,
+            "kind": "arithmetic_base",
+            "scope": "void ShowGoalsList(CompanyID company)",
+            "call": "GetString",
+            "args": [
+              "STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[0]"
+            ],
+            "relation": "computed StringID: STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[0]"
+          },
+          {
+            "path": "src/goal_gui.cpp",
+            "line": 356,
+            "kind": "arithmetic_base",
+            "scope": "void ShowGoalsList(CompanyID company)",
+            "call": "GetString",
+            "args": [
+              "STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[1]"
+            ],
+            "relation": "computed StringID: STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[1]"
+          },
+          {
+            "path": "src/goal_gui.cpp",
+            "line": 359,
+            "kind": "arithmetic_base",
+            "scope": "void ShowGoalsList(CompanyID company)",
+            "call": "GetString",
+            "args": [
+              "STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[2]"
+            ],
+            "relation": "computed StringID: STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[2]"
+          }
+        ],
+        "notes": [
+          "StringID = STR_GOAL_QUESTION_BUTTON_CANCEL + 1 (goal question buttons); candidate verified contiguous."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 1,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 3797
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.goal_close",
+      "key": "STR_GOAL_QUESTION_BUTTON_CLOSE",
+      "category": "dynamic",
+      "text": "Close",
+      "expected_context": "Close button label on a goal question window, reached through the same button-index arithmetic; not the window-close tooltip.",
+      "expected_locations": [
+        "src/goal_gui.cpp:353"
+      ],
+      "notes": "Button ids come from the goal question API, so the exact slot is runtime data.",
+      "placeholders": [],
+      "practical": {
+        "status": "arithmetic",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/goal_gui.cpp",
+            "line": 353,
+            "kind": "arithmetic_base",
+            "scope": "void ShowGoalsList(CompanyID company)",
+            "call": "GetString",
+            "args": [
+              "STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[0]"
+            ],
+            "relation": "computed StringID: STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[0]"
+          },
+          {
+            "path": "src/goal_gui.cpp",
+            "line": 356,
+            "kind": "arithmetic_base",
+            "scope": "void ShowGoalsList(CompanyID company)",
+            "call": "GetString",
+            "args": [
+              "STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[1]"
+            ],
+            "relation": "computed StringID: STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[1]"
+          },
+          {
+            "path": "src/goal_gui.cpp",
+            "line": 359,
+            "kind": "arithmetic_base",
+            "scope": "void ShowGoalsList(CompanyID company)",
+            "call": "GetString",
+            "args": [
+              "STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[2]"
+            ],
+            "relation": "computed StringID: STR_GOAL_QUESTION_BUTTON_CANCEL + this->button[2]"
+          }
+        ],
+        "notes": [
+          "StringID = STR_GOAL_QUESTION_BUTTON_CANCEL + 17 (goal question buttons); candidate verified contiguous."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 101,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 3813
+          },
+          {
+            "path": "src/ai/ai_gui.cpp",
+            "line": 112
+          },
+          {
+            "path": "src/ai/ai_gui.cpp",
+            "line": 114
+          },
+          {
+            "path": "src/ai/ai_gui.cpp",
+            "line": 115
+          },
+          {
+            "path": "src/ai/ai_gui.cpp",
+            "line": 116
+          },
+          {
+            "path": "src/ai/ai_gui.cpp",
+            "line": 336
+          },
+          {
+            "path": "src/aircraft.h",
+            "line": 113
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 397
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 405
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 410
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 1679
+          },
+          {
+            "path": "src/airport.h",
+            "line": 131
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.buy_ship_caption",
+      "key": "STR_BUY_VEHICLE_SHIP_CAPTION",
+      "category": "dynamic",
+      "text": "New Ships",
+      "expected_context": "Caption 'New Ships' of the ship purchase window, reached as STR_BUY_VEHICLE_TRAIN_ALL_CAPTION + vehicle_type in the shared build-vehicle window.",
+      "expected_locations": [
+        "src/build_vehicle_gui.cpp:1770"
+      ],
+      "notes": "The arithmetic base is inside a ternary expression, not adjacent to the plus sign.",
+      "placeholders": [],
+      "practical": {
+        "status": "arithmetic",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/build_vehicle_gui.cpp",
+            "line": 1770,
+            "kind": "arithmetic_base",
+            "scope": "void BuildVehicle()",
+            "call": null,
+            "args": [
+              "this->listview_mode ? STR_VEHICLE_LIST_AVAILABLE_TRAINS : STR_BUY_VEHICLE_TRAIN_ALL_CAPTION"
+            ],
+            "relation": "computed StringID: STR_BUY_VEHICLE_TRAIN_ALL_CAPTION + this->vehicle_type)"
+          }
+        ],
+        "notes": [
+          "StringID = STR_BUY_VEHICLE_TRAIN_ALL_CAPTION + 2 (vehicle purchase captions); candidate verified contiguous."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 2,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 4170
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 4311
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.buy_aircraft_caption",
+      "key": "STR_BUY_VEHICLE_AIRCRAFT_CAPTION",
+      "category": "dynamic",
+      "text": "New Aircraft",
+      "expected_context": "Caption 'New Aircraft' of the aircraft purchase window, same computed caption key as the ship window.",
+      "expected_locations": [
+        "src/build_vehicle_gui.cpp:1770"
+      ],
+      "notes": "Verified contiguous with the three other vehicle-type captions.",
+      "placeholders": [],
+      "practical": {
+        "status": "arithmetic",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/build_vehicle_gui.cpp",
+            "line": 1770,
+            "kind": "arithmetic_base",
+            "scope": "void BuildVehicle()",
+            "call": null,
+            "args": [
+              "this->listview_mode ? STR_VEHICLE_LIST_AVAILABLE_TRAINS : STR_BUY_VEHICLE_TRAIN_ALL_CAPTION"
+            ],
+            "relation": "computed StringID: STR_BUY_VEHICLE_TRAIN_ALL_CAPTION + this->vehicle_type)"
+          }
+        ],
+        "notes": [
+          "StringID = STR_BUY_VEHICLE_TRAIN_ALL_CAPTION + 3 (vehicle purchase captions); candidate verified contiguous."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 2,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 4171
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 4312
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.month_february",
+      "key": "STR_MONTH_FEB",
+      "category": "dynamic",
+      "text": "February",
+      "expected_context": "February in the date-selection dropdown. Months are rendered as STR_MONTH_JAN + month, so this key has no direct use.",
+      "expected_locations": [
+        "src/date_gui.cpp:134"
+      ],
+      "notes": "The date GUI also uses the base for layout measurement.",
+      "placeholders": [],
+      "practical": {
+        "status": "arithmetic",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/date_gui.cpp",
+            "line": 86,
+            "kind": "arithmetic_base",
+            "scope": "void ShowDateDropDown(WidgetID widget)",
+            "call": "MakeDropDownListStringItem",
+            "args": [
+              "STR_MONTH_JAN + i",
+              "i"
+            ],
+            "relation": "computed StringID: STR_MONTH_JAN + i"
+          },
+          {
+            "path": "src/date_gui.cpp",
+            "line": 116,
+            "kind": "arithmetic_base",
+            "scope": "void ShowDateDropDown(WidgetID widget)",
+            "call": "GetStringBoundingBox",
+            "args": [
+              "STR_MONTH_JAN + i"
+            ],
+            "relation": "computed StringID: STR_MONTH_JAN + i"
+          },
+          {
+            "path": "src/date_gui.cpp",
+            "line": 134,
+            "kind": "arithmetic_base",
+            "scope": "void ShowDateDropDown(WidgetID widget)",
+            "call": "GetString",
+            "args": [
+              "STR_MONTH_JAN + this->date.month"
+            ],
+            "relation": "computed StringID: STR_MONTH_JAN + this->date.month"
+          },
+          {
+            "path": "src/strings.cpp",
+            "line": 577,
+            "kind": "arithmetic_base",
+            "scope": "static void FormatMonthAndYear(StringBuilder &builder, TimerGameCalendar::Date date, uint case_index)",
+            "call": "MakeParameters",
+            "args": [
+              "STR_MONTH_JAN + ymd.month",
+              "ymd.year"
+            ],
+            "relation": "computed StringID: STR_MONTH_JAN + ymd.month"
+          }
+        ],
+        "notes": [
+          "StringID = STR_MONTH_JAN + 1 (month names); candidate verified contiguous."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 4,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 599
+          },
+          {
+            "path": "src/company_cmd.cpp",
+            "line": 721
+          },
+          {
+            "path": "src/timer/timer_game_common.cpp",
+            "line": 102
+          },
+          {
+            "path": "src/timer/timer_game_common.cpp",
+            "line": 127
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.day_31",
+      "key": "STR_DAY_NUMBER_31ST",
+      "category": "dynamic",
+      "text": "31st",
+      "expected_context": "31st day ordinal in the date-selection dropdown, reached as STR_DAY_NUMBER_1ST + i.",
+      "expected_locations": [
+        "src/date_gui.cpp:133"
+      ],
+      "notes": "The runtime expression subtracts one from the day number in another call site.",
+      "placeholders": [],
+      "practical": {
+        "status": "arithmetic",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/date_gui.cpp",
+            "line": 79,
+            "kind": "arithmetic_base",
+            "scope": "void ShowDateDropDown(WidgetID widget)",
+            "call": "MakeDropDownListStringItem",
+            "args": [
+              "STR_DAY_NUMBER_1ST + i",
+              "i + 1"
+            ],
+            "relation": "computed StringID: STR_DAY_NUMBER_1ST + i"
+          },
+          {
+            "path": "src/date_gui.cpp",
+            "line": 110,
+            "kind": "arithmetic_base",
+            "scope": "void ShowDateDropDown(WidgetID widget)",
+            "call": "GetStringBoundingBox",
+            "args": [
+              "STR_DAY_NUMBER_1ST + i"
+            ],
+            "relation": "computed StringID: STR_DAY_NUMBER_1ST + i"
+          },
+          {
+            "path": "src/date_gui.cpp",
+            "line": 133,
+            "kind": "arithmetic_base",
+            "scope": "void ShowDateDropDown(WidgetID widget)",
+            "call": "GetString",
+            "args": [
+              "STR_DAY_NUMBER_1ST + this->date.day - 1"
+            ],
+            "relation": "computed StringID: STR_DAY_NUMBER_1ST + this->date.day"
+          },
+          {
+            "path": "src/strings.cpp",
+            "line": 569,
+            "kind": "arithmetic_base",
+            "scope": "static void FormatYmdString(StringBuilder &builder, TimerGameCalendar::Date date, uint case_index)",
+            "call": "MakeParameters",
+            "args": [
+              "STR_DAY_NUMBER_1ST + ymd.day - 1",
+              "STR_MONTH_ABBREV_JAN + ymd.month",
+              "ymd.year"
+            ],
+            "relation": "computed StringID: STR_DAY_NUMBER_1ST + ymd.day"
+          }
+        ],
+        "notes": [
+          "StringID = STR_DAY_NUMBER_1ST + 30 (day ordinals); candidate verified contiguous."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 2,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 581
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 1753
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.ai_speed_slow",
+      "key": "STR_AI_SPEED_SLOW",
+      "category": "dynamic",
+      "text": "Slow",
+      "expected_context": "'Slow' option of the competitor construction speed setting. The settings template names STR_AI_SPEED_VERY_SLOW as strval and the GUI adds the selected value.",
+      "expected_locations": [
+        "src/table/settings/difficulty_settings.ini:162"
+      ],
+      "notes": "Cross-file binding: ini template + settings.cpp arithmetic.",
+      "placeholders": [],
+      "practical": {
+        "status": "settings",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/table/settings/difficulty_settings.ini",
+            "line": 162,
+            "kind": "settings_dropdown_base",
+            "scope": "SDT_VAR",
+            "call": null,
+            "args": [],
+            "relation": "difficulty.competitor_speed dropdown: StringID = STR_AI_SPEED_VERY_SLOW + (value - 0); values 0..4"
+          },
+          {
+            "path": "src/settings.cpp",
+            "line": 457,
+            "kind": "settings_rule",
+            "scope": "GetSettingsValueString",
+            "call": null,
+            "args": [],
+            "relation": "a dropdown value maps to StringID str_val - min_val + value"
+          }
+        ],
+        "notes": [
+          "Settings dropdown option 1 of 0..4 for difficulty.competitor_speed."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 101,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 1192
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 994
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 1073
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 1109
+          },
+          {
+            "path": "src/aircraft_cmd.cpp",
+            "line": 1119
+          },
+          {
+            "path": "src/airport.h",
+            "line": 50
+          },
+          {
+            "path": "src/newgrf_engine.cpp",
+            "line": 153
+          },
+          {
+            "path": "src/newgrf_engine.cpp",
+            "line": 185
+          },
+          {
+            "path": "src/station_cmd.cpp",
+            "line": 3869
+          },
+          {
+            "path": "src/station_cmd.cpp",
+            "line": 3985
+          },
+          {
+            "path": "src/table/airport_movement.h",
+            "line": 39
+          },
+          {
+            "path": "src/table/airport_movement.h",
+            "line": 40
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.group_all_ships",
+      "key": "STR_GROUP_ALL_SHIPS",
+      "category": "dynamic",
+      "text": "All ships",
+      "expected_context": "'All ships' pseudo-group label in the vehicle group list, reached as STR_GROUP_ALL_TRAINS + vehicle type.",
+      "expected_locations": [
+        "src/group_gui.cpp:312"
+      ],
+      "notes": "The same base is also used in the autoreplace window.",
+      "placeholders": [],
+      "practical": {
+        "status": "arithmetic",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/autoreplace_gui.cpp",
+            "line": 390,
+            "kind": "arithmetic_base",
+            "scope": "void OnRailRoadTypeChange()",
+            "call": "GetString",
+            "args": [
+              "STR_REPLACE_VEHICLES_WHITE",
+              "STR_REPLACE_VEHICLE_TRAIN + this->window_number",
+              "STR_GROUP_ALL_TRAINS + this->window_number",
+              "std::monostate{}"
+            ],
+            "relation": "computed StringID: STR_GROUP_ALL_TRAINS + this->window_number"
+          },
+          {
+            "path": "src/group_gui.cpp",
+            "line": 247,
+            "kind": "arithmetic_base",
+            "scope": "uint ComputeGroupInfoSize()",
+            "call": "GetStringBoundingBox",
+            "args": [
+              "STR_GROUP_ALL_TRAINS + this->vli.vtype"
+            ],
+            "relation": "computed StringID: STR_GROUP_ALL_TRAINS + this->vli.vtype"
+          },
+          {
+            "path": "src/group_gui.cpp",
+            "line": 312,
+            "kind": "arithmetic_base",
+            "scope": "std::string GetGroupNameString(GroupID g_id) const",
+            "call": "GetString",
+            "args": [
+              "STR_GROUP_ALL_TRAINS + this->vli.vtype"
+            ],
+            "relation": "computed StringID: STR_GROUP_ALL_TRAINS + this->vli.vtype"
+          }
+        ],
+        "notes": [
+          "StringID = STR_GROUP_ALL_TRAINS + 2 (all-vehicles group labels); candidate verified contiguous."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 2,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 4123
+          },
+          {
+            "path": "src/ship.h",
+            "line": 30
+          }
+        ]
+      }
+    },
+    {
+      "id": "dynamic.smallmap_industries",
+      "key": "STR_SMALLMAP_TYPE_INDUSTRIES",
+      "category": "dynamic",
+      "text": "Industries",
+      "expected_context": "'Industries' small-map mode label, reached as STR_SMALLMAP_TYPE_CONTOURS + map_type.",
+      "expected_locations": [
+        "src/smallmap_gui.cpp:1519"
+      ],
+      "notes": "Seven map-type labels form the contiguous range.",
+      "placeholders": [],
+      "practical": {
+        "status": "arithmetic",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "src/smallmap_gui.cpp",
+            "line": 1519,
+            "kind": "arithmetic_base",
+            "scope": "Point GetStationMiddle(const Station *st) const",
+            "call": "GetString",
+            "args": [
+              "STR_SMALLMAP_CAPTION",
+              "STR_SMALLMAP_TYPE_CONTOURS + this->map_type"
+            ],
+            "relation": "computed StringID: STR_SMALLMAP_TYPE_CONTOURS + this->map_type"
+          }
+        ],
+        "notes": [
+          "StringID = STR_SMALLMAP_TYPE_CONTOURS + 2 (small map mode labels); candidate verified contiguous."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 95,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 777
+          },
+          {
+            "path": "src/genworld.cpp",
+            "line": 52
+          },
+          {
+            "path": "src/genworld.cpp",
+            "line": 156
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 83
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 1321
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 1879
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 2357
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 2415
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 2438
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 2454
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 2488
+          },
+          {
+            "path": "src/industry_cmd.cpp",
+            "line": 2503
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing.scenedit_separator",
+      "key": "STR_SCENEDIT_FILE_MENU_SEPARATOR",
+      "category": "missing",
+      "text": "",
+      "expected_context": "Old scenario-editor menu separator string. No allowlisted source reference exists in 15.3; it appears only in language tables.",
+      "expected_locations": [],
+      "notes": "Genuinely unreferenced, not merely a locator failure.",
+      "placeholders": [],
+      "practical": {
+        "status": "missing",
+        "confidence": "none",
+        "hit": false,
+        "correctly_missing": true,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [],
+        "notes": [
+          "No direct token, macro row, settings range, or verified offset range was found in the allowlisted evidence."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 1,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 442
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing.show_hidden_ship",
+      "key": "STR_SHOW_HIDDEN_ENGINES_VEHICLE_SHIP",
+      "category": "missing",
+      "text": "{BLACK}Show hidden",
+      "expected_context": "'Show hidden' tooltip for ships in the build-vehicle window; the cockpit uses STR_SHOW_HIDDEN_ENGINES_VEHICLE_TRAIN + type, which the current locator does not model.",
+      "expected_locations": [
+        "src/autoreplace_gui.cpp:285"
+      ],
+      "notes": "Human-verified base expression exists; this is a locator coverage failure, not dead text.",
+      "placeholders": [
+        {
+          "token": "BLACK",
+          "kind": "style"
+        }
+      ],
+      "practical": {
+        "status": "missing",
+        "confidence": "none",
+        "hit": false,
+        "correctly_missing": false,
+        "expected_exists_but_missing": true,
+        "wrong_association": false,
+        "evidence": [],
+        "notes": [
+          "No direct token, macro row, settings range, or verified offset range was found in the allowlisted evidence."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 5,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 302
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 308
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 300
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 301
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 303
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing.toolbar_map_tooltip",
+      "key": "STR_TOOLBAR_TOOLTIP_DISPLAY_MAP",
+      "category": "missing",
+      "text": "{BLACK}Open map, extra viewport, cargo flow or list of signs",
+      "expected_context": "Toolbar tooltip explaining the map/extra-viewport/cargo-flow menu. The toolbar assigns tooltips via STR_TOOLBAR_TOOLTIP_PAUSE_GAME + widget, a sparse widget-to-string mapping the locator does not model.",
+      "expected_locations": [
+        "src/toolbar_gui.cpp:2228"
+      ],
+      "notes": "Human-verified base expression; sparse offsets make generic arithmetic inference unsafe.",
+      "placeholders": [
+        {
+          "token": "BLACK",
+          "kind": "style"
+        }
+      ],
+      "practical": {
+        "status": "missing",
+        "confidence": "none",
+        "hit": false,
+        "correctly_missing": false,
+        "expected_exists_but_missing": true,
+        "wrong_association": false,
+        "evidence": [],
+        "notes": [
+          "No direct token, macro row, settings range, or verified offset range was found in the allowlisted evidence."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 1,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 390
+          }
+        ]
+      }
+    },
+    {
+      "id": "resource.basegraphics_dos",
+      "key": "STR_BASEGRAPHICS_DOS_DESCRIPTION",
+      "category": "resource_binding",
+      "text": "Original Transport Tycoon Deluxe DOS edition graphics.",
+      "expected_context": "Description of the original DOS graphics base set, referenced from the base-set metadata file rather than C++ code.",
+      "expected_locations": [
+        "media/baseset/orig_dos.obg:9"
+      ],
+      "notes": "Proves that source-aware retrieval must include resource metadata, not only .cpp/.h files.",
+      "placeholders": [],
+      "practical": {
+        "status": "direct",
+        "confidence": "high",
+        "hit": true,
+        "correctly_missing": false,
+        "expected_exists_but_missing": false,
+        "wrong_association": false,
+        "evidence": [
+          {
+            "path": "media/baseset/orig_dos.obg",
+            "line": 9,
+            "kind": "baseset_metadata",
+            "scope": null,
+            "call": null,
+            "args": [],
+            "relation": null
+          }
+        ],
+        "notes": [
+          "StringID token is referenced directly; definition row is not evidence."
+        ]
+      },
+      "naive": {
+        "hit": true,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 2,
+        "sites": [
+          {
+            "path": "media/baseset/orig_dos.obg",
+            "line": 9
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 5468
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing.month_abbrev_feb",
+      "key": "STR_MONTH_ABBREV_FEB",
+      "category": "missing",
+      "text": "Feb",
+      "expected_context": "Abbreviated February in the long date format. The date formatter builds the parameter as STR_MONTH_ABBREV_JAN + ymd.month (one-based month), but the locator only models the full-month family.",
+      "expected_locations": [
+        "src/strings.cpp:569"
+      ],
+      "notes": "Human-verified base expression; locator coverage failure, not dead text.",
+      "placeholders": [],
+      "practical": {
+        "status": "missing",
+        "confidence": "none",
+        "hit": false,
+        "correctly_missing": false,
+        "expected_exists_but_missing": true,
+        "wrong_association": false,
+        "evidence": [],
+        "notes": [
+          "No direct token, macro row, settings range, or verified offset range was found in the allowlisted evidence."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 6,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 585
+          },
+          {
+            "path": "src/company_cmd.cpp",
+            "line": 721
+          },
+          {
+            "path": "src/saveload/saveload.cpp",
+            "line": 2645
+          },
+          {
+            "path": "src/timer/timer_game_common.cpp",
+            "line": 102
+          },
+          {
+            "path": "src/timer/timer_game_common.cpp",
+            "line": 127
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 599
+          }
+        ]
+      }
+    },
+    {
+      "id": "missing.secondary_colour_setting",
+      "key": "STR_COLOUR_SECONDARY_PALE_GREEN",
+      "category": "missing",
+      "text": "Pale Green",
+      "expected_context": "One option of the 'secondary company colour' advanced-setting dropdown. The template names STR_COLOUR_SECONDARY_DARK_BLUE as strval and the range ends at the symbolic constant COLOUR_END, so the current numeric settings parser cannot prove the offset.",
+      "expected_locations": [
+        "src/table/settings/gui_settings.ini:377"
+      ],
+      "notes": "Human-verified base expression; symbolic max blocks the settings-range heuristic.",
+      "placeholders": [],
+      "practical": {
+        "status": "missing",
+        "confidence": "none",
+        "hit": false,
+        "correctly_missing": false,
+        "expected_exists_but_missing": true,
+        "wrong_association": false,
+        "evidence": [],
+        "notes": [
+          "No direct token, macro row, settings range, or verified offset range was found in the allowlisted evidence."
+        ]
+      },
+      "naive": {
+        "hit": false,
+        "definition_noise": true,
+        "confuser_noise": false,
+        "wrong_association": false,
+        "site_count": 2,
+        "sites": [
+          {
+            "path": "src/lang/english.txt",
+            "line": 194
+          },
+          {
+            "path": "src/lang/english.txt",
+            "line": 175
+          }
+        ]
+      }
+    }
+  ]
+}

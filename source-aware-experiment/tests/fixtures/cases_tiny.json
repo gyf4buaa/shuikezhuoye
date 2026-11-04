@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "target_locale": "zh-CN",
+  "cases": [
+    {
+      "id": "tiny.alpha",
+      "key": "STR_ALPHA",
+      "category": "placeholder",
+      "expected_context": "Test fixture: a length-like value in a UI string.",
+      "expected_locations": ["src/demo.cpp:6"]
+    },
+    {
+      "id": "tiny.cargo_plural",
+      "key": "STR_CARGO_PLURAL_COAL",
+      "category": "same_text",
+      "expected_context": "Test fixture: plural cargo name resolved by token pasting.",
+      "expected_locations": ["src/table/cargo_const.h:16"]
+    },
+    {
+      "id": "tiny.missing",
+      "key": "STR_DEAD",
+      "category": "missing",
+      "expected_context": "Test fixture: deliberately unreferenced string.",
+      "expected_locations": [],
+      "expected_status": "missing"
+    }
+  ]
+}
