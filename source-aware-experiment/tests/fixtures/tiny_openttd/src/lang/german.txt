@@ -1,0 +1,3 @@
+##name German
+##id 0x0000
+STR_ALPHA :Alpha DE

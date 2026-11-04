@@ -1,0 +1,370 @@
+{
+  "schema": 1,
+  "corpus": "audit/corpus.json",
+  "target_locale": "zh-CN",
+  "cases": [
+    {
+      "id": "placeholder.plane_crash",
+      "key": "STR_NEWS_PLANE_CRASH_OUT_OF_FUEL",
+      "category": "placeholder",
+      "expected_context": "News headline when an aircraft crashes because it could not reach an airport. The {COMMA} argument is the number of victims; the sentence is a complete exclamation, not a tooltip.",
+      "expected_locations": [
+        "src/aircraft_cmd.cpp:1361"
+      ],
+      "notes": "GetEncodedString passes `victims` directly; the {COMMA} count is a death toll."
+    },
+    {
+      "id": "placeholder.company_merger",
+      "key": "STR_NEWS_COMPANY_MERGER_DESCRIPTION",
+      "category": "placeholder",
+      "expected_context": "News body for a friendly company acquisition: the first {RAW_STRING} is the buying company, the second the acquired company, and {CURRENCY_LONG} the sale price.",
+      "expected_locations": [
+        "src/economy.cpp:1993"
+      ],
+      "notes": "The sibling takeover headline uses the same two company names but no price."
+    },
+    {
+      "id": "placeholder.measure_length",
+      "key": "STR_MEASURE_LENGTH",
+      "category": "placeholder",
+      "expected_context": "Measurement tooltip while dragging in the viewport. {NUM} is a distance in tiles, prefixed by a black text-colour code.",
+      "expected_locations": [
+        "src/viewport.cpp:2865"
+      ],
+      "notes": "The height-difference variant is a different key and must remain separate."
+    },
+    {
+      "id": "placeholder.performance_percent",
+      "key": "STR_PERFORMANCE_DETAIL_PERCENT",
+      "category": "placeholder",
+      "expected_context": "Percentage bar in the company performance detail graph. {NUM} is a clamped 0-100 percentage, not a raw score.",
+      "expected_locations": [
+        "src/graph_gui.cpp:1596"
+      ],
+      "notes": "Another call site uses GetParamMaxValue for layout measurement."
+    },
+    {
+      "id": "placeholder.league_rank",
+      "key": "STR_COMPANY_LEAGUE_COMPANY_RANK",
+      "category": "placeholder",
+      "expected_context": "Rank cell in the company league table. {NUM} is a 1-based position (rank + 1), so the translator must not assume a zero-based index.",
+      "expected_locations": [
+        "src/league_gui.cpp:335"
+      ],
+      "notes": "The same key is also measured with GetStringBoundingBox at line 362."
+    },
+    {
+      "id": "placeholder.smallmap_industry",
+      "key": "STR_SMALLMAP_INDUSTRY",
+      "category": "placeholder",
+      "expected_context": "Small-map legend entry for industries. {STRING} is the industry legend label and {NUM} is the pool's maximum size, not a live count.",
+      "expected_locations": [
+        "src/smallmap_gui.cpp:1537"
+      ],
+      "notes": "A later switch branch also assigns the key without arguments."
+    },
+    {
+      "id": "placeholder.industry_construction",
+      "key": "STR_NEWS_INDUSTRY_CONSTRUCTION",
+      "category": "placeholder",
+      "expected_context": "News message emitted when an industry is built. {STRING} is the industry name and {TOWN} is the nearby town. The table row assigns it to IndustrySpec::new_industry_text.",
+      "expected_locations": [
+        "src/table/build_industry.h:1158"
+      ],
+      "notes": "The actual runtime call is industry_cmd.cpp:1719, reached through the new_industry_text field; the field indirection is not followed by the current locator. Verified manually."
+    },
+    {
+      "id": "placeholder.config_setting_label",
+      "key": "STR_CONFIG_SETTING_NOSERVICE",
+      "category": "placeholder",
+      "expected_context": "Label of the 'Disable servicing when breakdowns set to none' advanced setting. {STRING2} is inserted by the settings GUI when the setting is disabled.",
+      "expected_locations": [
+        "src/table/settings/game_settings.ini:65"
+      ],
+      "notes": "A settings-template reference, not C++ code."
+    },
+    {
+      "id": "same_text.cargo_plural",
+      "key": "STR_CARGO_PLURAL_COAL",
+      "category": "same_text",
+      "expected_context": "Plural cargo name 'Coal', bound to CargoSpec::name through the MK_STR_CARGO_PLURAL token-pasting macro. Used where a quantity of coal is described, not where one unit is named.",
+      "expected_locations": [
+        "src/table/cargo_const.h:59"
+      ],
+      "confuser_keys": [
+        "STR_CARGO_SINGULAR_COAL"
+      ],
+      "notes": "Both keys display 'Coal'; the plural/singular slot is the only distinction."
+    },
+    {
+      "id": "same_text.cargo_singular",
+      "key": "STR_CARGO_SINGULAR_COAL",
+      "category": "same_text",
+      "expected_context": "Singular cargo name 'Coal', bound to CargoSpec::name_single through MK_STR_CARGO_SINGULAR. Used for one unit / a singular noun context.",
+      "expected_locations": [
+        "src/table/cargo_const.h:59"
+      ],
+      "confuser_keys": [
+        "STR_CARGO_PLURAL_COAL"
+      ],
+      "notes": "Same English text and same table row as the plural key."
+    },
+    {
+      "id": "same_text.colour_default",
+      "key": "STR_COLOUR_DEFAULT",
+      "category": "same_text",
+      "expected_context": "'Default' entry of the company livery colour dropdown; it is not the NewGRF station-class default or a vehicle service interval.",
+      "expected_locations": [
+        "src/company_gui.cpp:595"
+      ],
+      "confuser_keys": [
+        "STR_STATION_CLASS_DFLT",
+        "STR_VEHICLE_DETAILS_DEFAULT"
+      ],
+      "notes": "Three distinct keys share the string 'Default'."
+    },
+    {
+      "id": "same_text.station_class_default",
+      "key": "STR_STATION_CLASS_DFLT",
+      "category": "same_text",
+      "expected_context": "Name of the built-in default station class in the NewGRF class list, not a colour or service-interval option.",
+      "expected_locations": [
+        "src/newgrf_station.cpp:39"
+      ],
+      "confuser_keys": [
+        "STR_COLOUR_DEFAULT",
+        "STR_VEHICLE_DETAILS_DEFAULT"
+      ],
+      "notes": "Road stops have a parallel assignment at newgrf_roadstop.cpp:39."
+    },
+    {
+      "id": "same_text.vehicle_interval_default",
+      "key": "STR_VEHICLE_DETAILS_DEFAULT",
+      "category": "same_text",
+      "expected_context": "'Default' choice in the vehicle servicing-interval dropdown; it means 'use the vehicle's default interval', not a colour or station class.",
+      "expected_locations": [
+        "src/vehicle_gui.cpp:2393"
+      ],
+      "confuser_keys": [
+        "STR_COLOUR_DEFAULT",
+        "STR_STATION_CLASS_DFLT"
+      ],
+      "notes": "The same key appears in the calendar and wall-clock dropdown arrays."
+    },
+    {
+      "id": "same_text.none_generic",
+      "key": "STR_NONE",
+      "category": "same_text",
+      "expected_context": "Generic 'None' item used to clear a dropdown (for example the rail-type dropdown), not the 'group by none' label or a setting-specific 'None'.",
+      "expected_locations": [
+        "src/road_gui.cpp:1824"
+      ],
+      "confuser_keys": [
+        "STR_GROUP_BY_NONE",
+        "STR_CONFIG_SETTING_NONE"
+      ],
+      "notes": "Seventeen keys display 'None'; direct-key retrieval must not merge them."
+    },
+    {
+      "id": "same_text.group_by_none",
+      "key": "STR_GROUP_BY_NONE",
+      "category": "same_text",
+      "expected_context": "'None' option in the vehicle list's group-by selector, meaning 'do not group'.",
+      "expected_locations": [
+        "src/vehicle_gui.cpp:155"
+      ],
+      "confuser_keys": [
+        "STR_NONE",
+        "STR_CONFIG_SETTING_NONE"
+      ],
+      "notes": "Initializer-list entry, not a call argument."
+    },
+    {
+      "id": "same_text.config_none",
+      "key": "STR_CONFIG_SETTING_NONE",
+      "category": "same_text",
+      "expected_context": "'None' value label of the smoke-amount setting dropdown; it is a settings enum label, not a generic dropdown clear item.",
+      "expected_locations": [
+        "src/table/settings/game_settings.ini:235"
+      ],
+      "confuser_keys": [
+        "STR_NONE",
+        "STR_GROUP_BY_NONE"
+      ],
+      "notes": "Referenced as strval in a settings template."
+    },
+    {
+      "id": "dynamic.colour_pale_green",
+      "key": "STR_COLOUR_PALE_GREEN",
+      "category": "dynamic",
+      "expected_context": "One of the 16 company colour names in the livery colour dropdown. It has no direct token use: the code computes STR_COLOUR_DARK_BLUE + colour where colour is a Colours enum value.",
+      "expected_locations": [
+        "src/company_gui.cpp:595"
+      ],
+      "notes": "StringID contiguous with the Colours enum; verified by the locator."
+    },
+    {
+      "id": "dynamic.colour_grey",
+      "key": "STR_COLOUR_GREY",
+      "category": "dynamic",
+      "expected_context": "Grey company colour name, reached only through the same STR_COLOUR_DARK_BLUE + colour computed StringID.",
+      "expected_locations": [
+        "src/company_gui.cpp:595"
+      ],
+      "notes": "No direct token reference elsewhere."
+    },
+    {
+      "id": "dynamic.goal_ok",
+      "key": "STR_GOAL_QUESTION_BUTTON_OK",
+      "category": "dynamic",
+      "expected_context": "OK button label on a goal question window. Buttons are chosen at runtime from a table of button identifiers and rendered as STR_GOAL_QUESTION_BUTTON_CANCEL + button index.",
+      "expected_locations": [
+        "src/goal_gui.cpp:353"
+      ],
+      "notes": "The same expression is used for three button slots."
+    },
+    {
+      "id": "dynamic.goal_close",
+      "key": "STR_GOAL_QUESTION_BUTTON_CLOSE",
+      "category": "dynamic",
+      "expected_context": "Close button label on a goal question window, reached through the same button-index arithmetic; not the window-close tooltip.",
+      "expected_locations": [
+        "src/goal_gui.cpp:353"
+      ],
+      "notes": "Button ids come from the goal question API, so the exact slot is runtime data."
+    },
+    {
+      "id": "dynamic.buy_ship_caption",
+      "key": "STR_BUY_VEHICLE_SHIP_CAPTION",
+      "category": "dynamic",
+      "expected_context": "Caption 'New Ships' of the ship purchase window, reached as STR_BUY_VEHICLE_TRAIN_ALL_CAPTION + vehicle_type in the shared build-vehicle window.",
+      "expected_locations": [
+        "src/build_vehicle_gui.cpp:1770"
+      ],
+      "notes": "The arithmetic base is inside a ternary expression, not adjacent to the plus sign."
+    },
+    {
+      "id": "dynamic.buy_aircraft_caption",
+      "key": "STR_BUY_VEHICLE_AIRCRAFT_CAPTION",
+      "category": "dynamic",
+      "expected_context": "Caption 'New Aircraft' of the aircraft purchase window, same computed caption key as the ship window.",
+      "expected_locations": [
+        "src/build_vehicle_gui.cpp:1770"
+      ],
+      "notes": "Verified contiguous with the three other vehicle-type captions."
+    },
+    {
+      "id": "dynamic.month_february",
+      "key": "STR_MONTH_FEB",
+      "category": "dynamic",
+      "expected_context": "February in the date-selection dropdown. Months are rendered as STR_MONTH_JAN + month, so this key has no direct use.",
+      "expected_locations": [
+        "src/date_gui.cpp:134"
+      ],
+      "notes": "The date GUI also uses the base for layout measurement."
+    },
+    {
+      "id": "dynamic.day_31",
+      "key": "STR_DAY_NUMBER_31ST",
+      "category": "dynamic",
+      "expected_context": "31st day ordinal in the date-selection dropdown, reached as STR_DAY_NUMBER_1ST + i.",
+      "expected_locations": [
+        "src/date_gui.cpp:133"
+      ],
+      "notes": "The runtime expression subtracts one from the day number in another call site."
+    },
+    {
+      "id": "dynamic.ai_speed_slow",
+      "key": "STR_AI_SPEED_SLOW",
+      "category": "dynamic",
+      "expected_context": "'Slow' option of the competitor construction speed setting. The settings template names STR_AI_SPEED_VERY_SLOW as strval and the GUI adds the selected value.",
+      "expected_locations": [
+        "src/table/settings/difficulty_settings.ini:162"
+      ],
+      "notes": "Cross-file binding: ini template + settings.cpp arithmetic."
+    },
+    {
+      "id": "dynamic.group_all_ships",
+      "key": "STR_GROUP_ALL_SHIPS",
+      "category": "dynamic",
+      "expected_context": "'All ships' pseudo-group label in the vehicle group list, reached as STR_GROUP_ALL_TRAINS + vehicle type.",
+      "expected_locations": [
+        "src/group_gui.cpp:312"
+      ],
+      "notes": "The same base is also used in the autoreplace window."
+    },
+    {
+      "id": "dynamic.smallmap_industries",
+      "key": "STR_SMALLMAP_TYPE_INDUSTRIES",
+      "category": "dynamic",
+      "expected_context": "'Industries' small-map mode label, reached as STR_SMALLMAP_TYPE_CONTOURS + map_type.",
+      "expected_locations": [
+        "src/smallmap_gui.cpp:1519"
+      ],
+      "notes": "Seven map-type labels form the contiguous range."
+    },
+    {
+      "id": "missing.scenedit_separator",
+      "key": "STR_SCENEDIT_FILE_MENU_SEPARATOR",
+      "category": "missing",
+      "expected_context": "Old scenario-editor menu separator string. No allowlisted source reference exists in 15.3; it appears only in language tables.",
+      "expected_locations": [],
+      "expected_status": "missing",
+      "notes": "Genuinely unreferenced, not merely a locator failure."
+    },
+    {
+      "id": "missing.show_hidden_ship",
+      "key": "STR_SHOW_HIDDEN_ENGINES_VEHICLE_SHIP",
+      "category": "missing",
+      "expected_context": "'Show hidden' tooltip for ships in the build-vehicle window; the cockpit uses STR_SHOW_HIDDEN_ENGINES_VEHICLE_TRAIN + type, which the current locator does not model.",
+      "expected_locations": [
+        "src/autoreplace_gui.cpp:285"
+      ],
+      "expected_status": "missing",
+      "notes": "Human-verified base expression exists; this is a locator coverage failure, not dead text."
+    },
+    {
+      "id": "missing.toolbar_map_tooltip",
+      "key": "STR_TOOLBAR_TOOLTIP_DISPLAY_MAP",
+      "category": "missing",
+      "expected_context": "Toolbar tooltip explaining the map/extra-viewport/cargo-flow menu. The toolbar assigns tooltips via STR_TOOLBAR_TOOLTIP_PAUSE_GAME + widget, a sparse widget-to-string mapping the locator does not model.",
+      "expected_locations": [
+        "src/toolbar_gui.cpp:2228"
+      ],
+      "expected_status": "missing",
+      "notes": "Human-verified base expression; sparse offsets make generic arithmetic inference unsafe."
+    },
+    {
+      "id": "resource.basegraphics_dos",
+      "key": "STR_BASEGRAPHICS_DOS_DESCRIPTION",
+      "category": "resource_binding",
+      "expected_context": "Description of the original DOS graphics base set, referenced from the base-set metadata file rather than C++ code.",
+      "expected_locations": [
+        "media/baseset/orig_dos.obg:9"
+      ],
+      "notes": "Proves that source-aware retrieval must include resource metadata, not only .cpp/.h files."
+    },
+    {
+      "id": "missing.month_abbrev_feb",
+      "key": "STR_MONTH_ABBREV_FEB",
+      "category": "missing",
+      "expected_context": "Abbreviated February in the long date format. The date formatter builds the parameter as STR_MONTH_ABBREV_JAN + ymd.month (one-based month), but the locator only models the full-month family.",
+      "expected_locations": [
+        "src/strings.cpp:569"
+      ],
+      "expected_status": "missing",
+      "notes": "Human-verified base expression; locator coverage failure, not dead text."
+    },
+    {
+      "id": "missing.secondary_colour_setting",
+      "key": "STR_COLOUR_SECONDARY_PALE_GREEN",
+      "category": "missing",
+      "expected_context": "One option of the 'secondary company colour' advanced-setting dropdown. The template names STR_COLOUR_SECONDARY_DARK_BLUE as strval and the range ends at the symbolic constant COLOUR_END, so the current numeric settings parser cannot prove the offset.",
+      "expected_locations": [
+        "src/table/settings/gui_settings.ini:377"
+      ],
+      "expected_status": "missing",
+      "notes": "Human-verified base expression; symbolic max blocks the settings-range heuristic."
+    }
+  ]
+}

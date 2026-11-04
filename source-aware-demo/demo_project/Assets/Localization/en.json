@@ -1,0 +1,17 @@
+{
+  "_meta": {
+    "synthetic": true,
+    "project": "Synthetic Naval Tactics Demo",
+    "note": "Fabricated demo data for a course PoC; not real production content."
+  },
+  "ui.common.cancel": "Cancel",
+  "ui.leaderboard.claim": "Claim",
+  "ui.leaderboard.rank_column": "Rank",
+  "ui.leaderboard.title": "Weekly Leaderboard",
+  "ui.military.rank_badge": "Rank",
+  "ui.reward.claim": "Claim",
+  "ui.reward.claim_all": "Claim All",
+  "ui.reward.rank_up": "Rank Up",
+  "ui.reward.title": "Victory Rewards",
+  "ui.settings.sound": "Sound"
+}

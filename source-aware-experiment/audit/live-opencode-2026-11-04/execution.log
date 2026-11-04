@@ -1,0 +1,2 @@
+live_executed=True model=deepseek-v4.1-flash responses=1 ok=0 parse_errors=0 transport_errors=1 aborted=True tokens=0 cost_usd=0.0
+first_response status=transport_error usage=None latency_ms=1451.5 cost_usd=None

@@ -1,0 +1,14 @@
+{
+  "project": "OpenTTD",
+  "version": "15.3",
+  "commit": "14ec60f248547d4d062a1160f0fc26d742319888",
+  "license": "GPL-2.0",
+  "license_file": "COPYING.md",
+  "repo_url": "https://github.com/OpenTTD/OpenTTD",
+  "archive_url": "https://codeload.github.com/OpenTTD/OpenTTD/tar.gz/14ec60f248547d4d062a1160f0fc26d742319888",
+  "archive_sha256": "df5962cf5fc4938171607a40db69585e2fe3a2a8c8cfe2831862c9e61ff107d7",
+  "extracted_directory": "OpenTTD-14ec60f248547d4d062a1160f0fc26d742319888",
+  "string_table": "src/lang/english.txt",
+  "why_this_project": "A real, mature GPL-2.0 game with a large keyed string table (4721 StringIDs) and source references spread across C++, INI settings templates and base-set metadata. It exercises exact-token, macro, settings-range and computed-StringID retrieval in one pinned checkout, and its translated tables let us test leakage denial.",
+  "not_vendored": "The corpus is downloaded into .corpus/ (gitignored). This repository stores only short evidence quotations with path:line attribution."
+}

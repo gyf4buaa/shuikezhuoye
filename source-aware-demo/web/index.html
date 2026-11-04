@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>源码感知翻译 PoC · Source-Aware Localization</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <div class="logo" aria-hidden="true">SA</div>
+    <div class="brand-text">
+      <h1>源码感知翻译 <span>PoC</span></h1>
+      <p>真实检索合成游戏工程 → 证据 → 可选同模型 API 翻译对照</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <span class="badge badge-synth">SYNTHETIC · 合成演示工程</span>
+    <span id="model-badge" class="badge badge-muted">检测模型中…</span>
+  </div>
+</header>
+
+<main class="layout">
+  <aside class="panel sidebar" aria-label="字符串 Key 列表">
+    <div class="panel-head">
+      <h2>字符串 Key</h2>
+      <span id="string-count" class="count">—</span>
+    </div>
+    <p class="hint">来自 <code>demo_project/Assets/Localization/en.json</code>。点击 Key 触发后端真实检索。</p>
+    <label class="filter-label" for="filter">筛选 Key 或源文本</label>
+    <input id="filter" type="search" placeholder="例如 Rank、claim" autocomplete="off">
+    <div id="shared-note" class="hint shared-note" hidden></div>
+    <div id="string-list" class="string-list" role="listbox" aria-label="字符串 Key"></div>
+  </aside>
+
+  <section class="content">
+    <div id="offline-banner" class="banner banner-warn" hidden role="status"></div>
+
+    <article class="panel selected-panel" aria-live="polite">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">当前选中</p>
+          <h2 id="selected-key" class="mono">加载中…</h2>
+        </div>
+        <span class="badge badge-synth">synthetic data</span>
+      </div>
+      <div class="selected-grid">
+        <div class="source-box">
+          <span class="label">源文本（英语）</span>
+          <p id="source-text" class="source-text">—</p>
+          <p id="shared-keys" class="note"></p>
+        </div>
+        <div class="locale-box">
+          <label class="label" for="locale">目标语言</label>
+          <select id="locale"></select>
+          <p class="note">对照使用同一个模型与参数；目标语言来自固定白名单。</p>
+        </div>
+      </div>
+      <div id="search-stats" class="stats" aria-live="polite">正在检索…</div>
+    </article>
+
+    <section class="panel evidence-panel" aria-labelledby="evidence-title">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">真实文件检索</p>
+          <h2 id="evidence-title">代码引用与字符串表证据</h2>
+        </div>
+        <span id="evidence-count" class="count">—</span>
+      </div>
+      <p class="note">路径、行号、代码片段与推断依据均在请求时读取自 <code>demo_project/</code>；不是模型预写的静态解释。</p>
+      <div id="evidence-list" class="evidence-list">
+        <p class="empty">检索中…</p>
+      </div>
+    </section>
+
+    <section class="panel compare-panel" aria-labelledby="compare-title">
+      <div class="panel-head">
+        <div>
+          <p class="eyebrow">可选 · 同模型对照</p>
+          <h2 id="compare-title">只给文本 vs 源文 + 检索上下文</h2>
+        </div>
+        <button id="run-compare" class="button primary" type="button" disabled>未配置 API Key · 仅检索演示</button>
+      </div>
+      <p id="compare-note" class="note">检测模型配置中…</p>
+      <div id="compare-status" class="compare-status" role="status" aria-live="polite"></div>
+      <div class="compare-grid">
+        <article class="result-card" id="baseline-card">
+          <div class="result-head">
+            <h3>A · 只给文本</h3>
+            <span class="badge badge-muted">尚未运行</span>
+          </div>
+          <div class="result-body"><p class="empty">没有调用模型，因此没有译文。</p></div>
+        </article>
+        <article class="result-card" id="contextual-card">
+          <div class="result-head">
+            <h3>B · 源文 + 检索证据</h3>
+            <span class="badge badge-muted">尚未运行</span>
+          </div>
+          <div class="result-body"><p class="empty">没有调用模型，因此没有译文。</p></div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="limits">
+      <h2>边界与限制</h2>
+      <ul>
+        <li>这是<strong>合成演示工程</strong>上的小型 PoC，尚未证明能在任意真实游戏中自动找到完整语义。</li>
+        <li>检索基于字面 Key / 文本与文件扫描，不分析复杂数据流、反射、字符串拼接或运行时格式化。</li>
+        <li>界面语境推断是确定性的标识符/注释词元启发式，不是编译器或语义分析；可能误判，证据不足会标为需人工确认。</li>
+        <li>同一文本可能属于多个 Key：未直接引用所选 Key 的命中会标为“同文本候选”。</li>
+        <li>未配置 <code>SOURCEAWARE_API_KEY</code> 时绝不调用模型、绝不显示 AI 译文；配置后为真实调用，但未做人工审校。</li>
+        <li>只读访问 <code>demo_project/</code>，带路径边界保护；默认只监听本机，不发送真实企业源码。</li>
+      </ul>
+    </footer>
+  </section>
+</main>
+<script src="/app.js"></script>
+</body>
+</html>
