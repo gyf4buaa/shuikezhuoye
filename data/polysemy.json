@@ -1,0 +1,934 @@
+{
+  "_notice": "合成术语库，仅用于课程演示；译名为常见游戏本地化用法的示例，不构成官方术语。",
+  "terms": [
+    {
+      "id": "setting",
+      "term": "Setting",
+      "aliases": [
+        "Settings",
+        "Setting",
+        "设置",
+        "设定",
+        "世界观设定"
+      ],
+      "senses": [
+        {
+          "id": "settings_menu",
+          "label": "设置菜单（选项）",
+          "keys": [
+            "settings",
+            "options",
+            "preferences",
+            "config",
+            "system"
+          ],
+          "screens": [
+            "settings",
+            "options",
+            "pause",
+            "system"
+          ],
+          "components": [
+            "tab",
+            "menu",
+            "button",
+            "toggle"
+          ],
+          "neighbors": [
+            "Graphics",
+            "Audio",
+            "Controls",
+            "Language",
+            "画面",
+            "音频",
+            "操作",
+            "语言",
+            "音效"
+          ],
+          "cotext": [
+            "Options",
+            "Preferences",
+            "Graphics",
+            "Audio",
+            "Language"
+          ],
+          "alias_bias": {
+            "设置": 3,
+            "Settings": 1
+          },
+          "translations": {
+            "pt-BR": "Configurações",
+            "de-DE": "Einstellungen",
+            "ru-RU": "Настройки",
+            "es-ES": "Ajustes",
+            "fr-FR": "Paramètres",
+            "en-US": "Settings"
+          }
+        },
+        {
+          "id": "world_setting",
+          "label": "世界观设定",
+          "keys": [
+            "lore",
+            "world",
+            "codex",
+            "story",
+            "archive"
+          ],
+          "screens": [
+            "codex",
+            "lore",
+            "story",
+            "archive"
+          ],
+          "components": [
+            "entry",
+            "article",
+            "panel",
+            "card"
+          ],
+          "neighbors": [
+            "Lore",
+            "World",
+            "Story",
+            "Codex",
+            "世界观",
+            "剧情",
+            "编年史"
+          ],
+          "cotext": [
+            "lore",
+            "world",
+            "story",
+            "codex",
+            "worldview"
+          ],
+          "alias_bias": {
+            "设定": 3,
+            "世界观设定": 3
+          },
+          "translations": {
+            "pt-BR": "Ambientação",
+            "de-DE": "Welt",
+            "ru-RU": "Мир",
+            "es-ES": "Ambientación",
+            "fr-FR": "Univers",
+            "en-US": "Setting"
+          }
+        }
+      ]
+    },
+    {
+      "id": "rank",
+      "term": "Rank",
+      "aliases": [
+        "Rank",
+        "Ranking",
+        "排名",
+        "排行榜",
+        "军衔",
+        "品质"
+      ],
+      "senses": [
+        {
+          "id": "leaderboard",
+          "label": "排行榜名次",
+          "keys": [
+            "leaderboard",
+            "ranking",
+            "ladder",
+            "season"
+          ],
+          "screens": [
+            "leaderboard",
+            "ranking",
+            "arena",
+            "season"
+          ],
+          "components": [
+            "row",
+            "entry",
+            "label",
+            "badge"
+          ],
+          "neighbors": [
+            "Score",
+            "Top",
+            "Season",
+            "Player",
+            "积分",
+            "赛季",
+            "玩家",
+            "榜单"
+          ],
+          "cotext": [
+            "leaderboard",
+            "top",
+            "score",
+            "season"
+          ],
+          "alias_bias": {
+            "Ranking": 1,
+            "排名": 2,
+            "排行榜": 2
+          },
+          "translations": {
+            "pt-BR": "Classificação",
+            "de-DE": "Rangliste",
+            "ru-RU": "Рейтинг",
+            "es-ES": "Clasificación",
+            "fr-FR": "Classement",
+            "en-US": "Ranking"
+          }
+        },
+        {
+          "id": "military_rank",
+          "label": "军衔/职级",
+          "keys": [
+            "military",
+            "army",
+            "officer",
+            "promotion"
+          ],
+          "screens": [
+            "barracks",
+            "military",
+            "character",
+            "promotion"
+          ],
+          "components": [
+            "badge",
+            "title",
+            "row"
+          ],
+          "neighbors": [
+            "Promote",
+            "Army",
+            "Officer",
+            "军衔",
+            "晋升",
+            "军队"
+          ],
+          "cotext": [
+            "promote",
+            "promotion",
+            "officer",
+            "army",
+            "military"
+          ],
+          "alias_bias": {
+            "军衔": 3
+          },
+          "translations": {
+            "pt-BR": "Patente",
+            "de-DE": "Rang",
+            "ru-RU": "Звание",
+            "es-ES": "Rango",
+            "fr-FR": "Grade",
+            "en-US": "Rank"
+          }
+        },
+        {
+          "id": "item_quality",
+          "label": "品质等级",
+          "keys": [
+            "quality",
+            "rarity",
+            "tier",
+            "item",
+            "equipment"
+          ],
+          "screens": [
+            "inventory",
+            "equipment",
+            "shop",
+            "item"
+          ],
+          "components": [
+            "cell",
+            "tooltip",
+            "badge",
+            "label"
+          ],
+          "neighbors": [
+            "Rare",
+            "Epic",
+            "Legendary",
+            "Tier",
+            "稀有",
+            "史诗",
+            "传说"
+          ],
+          "cotext": [
+            "rare",
+            "epic",
+            "legendary",
+            "quality",
+            "tier"
+          ],
+          "alias_bias": {
+            "品质": 2
+          },
+          "translations": {
+            "pt-BR": "Qualidade",
+            "de-DE": "Qualität",
+            "ru-RU": "Качество",
+            "es-ES": "Calidad",
+            "fr-FR": "Qualité",
+            "en-US": "Quality"
+          }
+        }
+      ]
+    },
+    {
+      "id": "claim",
+      "term": "Claim",
+      "aliases": [
+        "Claim",
+        "领取",
+        "声称",
+        "主张"
+      ],
+      "senses": [
+        {
+          "id": "claim_reward",
+          "label": "领取奖励",
+          "keys": [
+            "reward",
+            "daily",
+            "quest",
+            "mail",
+            "mission"
+          ],
+          "screens": [
+            "reward",
+            "daily",
+            "mail",
+            "quest",
+            "mission"
+          ],
+          "components": [
+            "button",
+            "row",
+            "card"
+          ],
+          "neighbors": [
+            "Reward",
+            "Daily",
+            "Mail",
+            "Quest",
+            "奖励",
+            "每日",
+            "邮件",
+            "任务"
+          ],
+          "cotext": [
+            "reward",
+            "daily",
+            "mail",
+            "quest"
+          ],
+          "alias_bias": {
+            "领取": 3
+          },
+          "translations": {
+            "pt-BR": "Resgatar",
+            "de-DE": "Abholen",
+            "ru-RU": "Получить",
+            "es-ES": "Reclamar",
+            "fr-FR": "Récupérer",
+            "en-US": "Claim"
+          }
+        },
+        {
+          "id": "claim_assert",
+          "label": "声称/断言",
+          "keys": [
+            "dialog",
+            "story",
+            "npc",
+            "statement"
+          ],
+          "screens": [
+            "dialog",
+            "story",
+            "npc"
+          ],
+          "components": [
+            "line",
+            "subtitle",
+            "text"
+          ],
+          "neighbors": [
+            "Said",
+            "Statement",
+            "Witness",
+            "声称",
+            "证人",
+            "对话"
+          ],
+          "cotext": [
+            "said",
+            "statement",
+            "witness",
+            "alleged"
+          ],
+          "alias_bias": {
+            "声称": 3,
+            "主张": 2
+          },
+          "translations": {
+            "pt-BR": "Alegar",
+            "de-DE": "Behaupten",
+            "ru-RU": "Утверждать",
+            "es-ES": "Alegar",
+            "fr-FR": "Affirmer",
+            "en-US": "Claim"
+          }
+        },
+        {
+          "id": "claim_territory",
+          "label": "占领/宣示领土",
+          "keys": [
+            "territory",
+            "war",
+            "map",
+            "conquest"
+          ],
+          "screens": [
+            "worldmap",
+            "war",
+            "territory"
+          ],
+          "components": [
+            "panel",
+            "button",
+            "label"
+          ],
+          "neighbors": [
+            "Territory",
+            "War",
+            "Conquest",
+            "领土",
+            "战争",
+            "占领"
+          ],
+          "cotext": [
+            "territory",
+            "conquest",
+            "war"
+          ],
+          "alias_bias": {},
+          "translations": {
+            "pt-BR": "Reivindicar",
+            "de-DE": "Beanspruchen",
+            "ru-RU": "Заявить права",
+            "es-ES": "Reivindicar",
+            "fr-FR": "Revendiquer",
+            "en-US": "Claim"
+          }
+        }
+      ]
+    },
+    {
+      "id": "march",
+      "term": "March",
+      "aliases": [
+        "March",
+        "行军",
+        "三月"
+      ],
+      "senses": [
+        {
+          "id": "march_move",
+          "label": "行军/部队移动",
+          "keys": [
+            "army",
+            "troop",
+            "campaign",
+            "war"
+          ],
+          "screens": [
+            "worldmap",
+            "war",
+            "army"
+          ],
+          "components": [
+            "button",
+            "panel",
+            "order"
+          ],
+          "neighbors": [
+            "Troop",
+            "Army",
+            "Campaign",
+            "行军",
+            "部队",
+            "出征"
+          ],
+          "cotext": [
+            "troop",
+            "army",
+            "campaign",
+            "march"
+          ],
+          "alias_bias": {
+            "行军": 3
+          },
+          "translations": {
+            "pt-BR": "Marchar",
+            "de-DE": "Marschieren",
+            "ru-RU": "Маршировать",
+            "es-ES": "Marchar",
+            "fr-FR": "Marcher",
+            "en-US": "March"
+          }
+        },
+        {
+          "id": "march_month",
+          "label": "三月",
+          "keys": [
+            "calendar",
+            "event",
+            "date",
+            "season"
+          ],
+          "screens": [
+            "calendar",
+            "event",
+            "season"
+          ],
+          "components": [
+            "label",
+            "header",
+            "date"
+          ],
+          "neighbors": [
+            "January",
+            "February",
+            "April",
+            "Event",
+            "一月",
+            "二月",
+            "四月"
+          ],
+          "cotext": [
+            "calendar",
+            "event",
+            "april",
+            "february"
+          ],
+          "alias_bias": {
+            "三月": 3
+          },
+          "translations": {
+            "pt-BR": "Março",
+            "de-DE": "März",
+            "ru-RU": "Март",
+            "es-ES": "Marzo",
+            "fr-FR": "Mars",
+            "en-US": "March"
+          }
+        }
+      ]
+    },
+    {
+      "id": "drop",
+      "term": "Drop",
+      "aliases": [
+        "Drop",
+        "掉落",
+        "下拉",
+        "上线"
+      ],
+      "senses": [
+        {
+          "id": "item_drop",
+          "label": "战利品掉落",
+          "keys": [
+            "loot",
+            "reward",
+            "dungeon",
+            "monster"
+          ],
+          "screens": [
+            "dungeon",
+            "battle",
+            "loot",
+            "reward"
+          ],
+          "components": [
+            "row",
+            "card",
+            "tooltip"
+          ],
+          "neighbors": [
+            "Loot",
+            "Reward",
+            "Dungeon",
+            "Boss",
+            "掉落",
+            "战利品",
+            "副本"
+          ],
+          "cotext": [
+            "loot",
+            "dungeon",
+            "boss",
+            "reward"
+          ],
+          "alias_bias": {
+            "掉落": 3
+          },
+          "translations": {
+            "pt-BR": "Saque",
+            "de-DE": "Beute",
+            "ru-RU": "Дроп",
+            "es-ES": "Botín",
+            "fr-FR": "Butin",
+            "en-US": "Loot"
+          }
+        },
+        {
+          "id": "ui_dropdown",
+          "label": "下拉菜单",
+          "keys": [
+            "dropdown",
+            "select",
+            "filter",
+            "sort"
+          ],
+          "screens": [
+            "settings",
+            "filter",
+            "list"
+          ],
+          "components": [
+            "select",
+            "menu",
+            "combobox"
+          ],
+          "neighbors": [
+            "Select",
+            "Filter",
+            "Sort",
+            "下拉",
+            "筛选",
+            "排序"
+          ],
+          "cotext": [
+            "select",
+            "filter",
+            "sort",
+            "dropdown"
+          ],
+          "alias_bias": {
+            "下拉": 3
+          },
+          "translations": {
+            "pt-BR": "Menu suspenso",
+            "de-DE": "Auswahlliste",
+            "ru-RU": "Выпадающий список",
+            "es-ES": "Menú desplegable",
+            "fr-FR": "Menu déroulant",
+            "en-US": "Dropdown"
+          }
+        },
+        {
+          "id": "release_drop",
+          "label": "发布/上线",
+          "keys": [
+            "release",
+            "launch",
+            "update",
+            "patch"
+          ],
+          "screens": [
+            "news",
+            "patch",
+            "announcement"
+          ],
+          "components": [
+            "title",
+            "banner",
+            "article"
+          ],
+          "neighbors": [
+            "Release",
+            "Launch",
+            "Update",
+            "上线",
+            "发布",
+            "版本"
+          ],
+          "cotext": [
+            "release",
+            "launch",
+            "patch",
+            "update"
+          ],
+          "alias_bias": {
+            "上线": 2
+          },
+          "translations": {
+            "pt-BR": "Lançamento",
+            "de-DE": "Veröffentlichung",
+            "ru-RU": "Релиз",
+            "es-ES": "Lanzamiento",
+            "fr-FR": "Sortie",
+            "en-US": "Release"
+          }
+        }
+      ]
+    },
+    {
+      "id": "party",
+      "term": "Party",
+      "aliases": [
+        "Party",
+        "队伍",
+        "小队",
+        "派对",
+        "党派"
+      ],
+      "senses": [
+        {
+          "id": "party_team",
+          "label": "队伍/组队",
+          "keys": [
+            "team",
+            "group",
+            "squad",
+            "dungeon",
+            "slot"
+          ],
+          "screens": [
+            "party",
+            "team",
+            "dungeon",
+            "matchmaking"
+          ],
+          "components": [
+            "panel",
+            "slot",
+            "button"
+          ],
+          "neighbors": [
+            "Team",
+            "Squad",
+            "Group",
+            "队伍",
+            "小队",
+            "组队"
+          ],
+          "cotext": [
+            "team",
+            "squad",
+            "group",
+            "dungeon"
+          ],
+          "alias_bias": {
+            "队伍": 2,
+            "小队": 2
+          },
+          "translations": {
+            "pt-BR": "Equipe",
+            "de-DE": "Gruppe",
+            "ru-RU": "Отряд",
+            "es-ES": "Equipo",
+            "fr-FR": "Équipe",
+            "en-US": "Party"
+          }
+        },
+        {
+          "id": "party_social",
+          "label": "派对/聚会",
+          "keys": [
+            "social",
+            "event",
+            "birthday"
+          ],
+          "screens": [
+            "social",
+            "event",
+            "housing"
+          ],
+          "components": [
+            "card",
+            "banner",
+            "dialog"
+          ],
+          "neighbors": [
+            "Birthday",
+            "Celebration",
+            "Party",
+            "派对",
+            "庆典"
+          ],
+          "cotext": [
+            "birthday",
+            "celebration",
+            "celebrate"
+          ],
+          "alias_bias": {
+            "派对": 3
+          },
+          "translations": {
+            "pt-BR": "Festa",
+            "de-DE": "Feier",
+            "ru-RU": "Вечеринка",
+            "es-ES": "Fiesta",
+            "fr-FR": "Fête",
+            "en-US": "Party"
+          }
+        },
+        {
+          "id": "party_political",
+          "label": "党派",
+          "keys": [
+            "politics",
+            "faction",
+            "election"
+          ],
+          "screens": [
+            "politics",
+            "faction",
+            "election"
+          ],
+          "components": [
+            "label",
+            "card",
+            "article"
+          ],
+          "neighbors": [
+            "Faction",
+            "Election",
+            "Politics",
+            "党派",
+            "阵营",
+            "选举"
+          ],
+          "cotext": [
+            "faction",
+            "election",
+            "politics"
+          ],
+          "alias_bias": {
+            "党派": 3
+          },
+          "translations": {
+            "pt-BR": "Partido",
+            "de-DE": "Partei",
+            "ru-RU": "Партия",
+            "es-ES": "Partido",
+            "fr-FR": "Parti",
+            "en-US": "Party"
+          }
+        }
+      ]
+    },
+    {
+      "id": "quality",
+      "term": "Quality",
+      "aliases": [
+        "Quality",
+        "品质",
+        "画质"
+      ],
+      "senses": [
+        {
+          "id": "quality_item",
+          "label": "物品品质",
+          "keys": [
+            "rarity",
+            "item",
+            "equipment",
+            "tier"
+          ],
+          "screens": [
+            "inventory",
+            "equipment",
+            "shop",
+            "item"
+          ],
+          "components": [
+            "cell",
+            "tooltip",
+            "badge",
+            "label"
+          ],
+          "neighbors": [
+            "Rare",
+            "Epic",
+            "Legendary",
+            "品质",
+            "稀有",
+            "史诗"
+          ],
+          "cotext": [
+            "rare",
+            "epic",
+            "legendary",
+            "tier"
+          ],
+          "alias_bias": {
+            "品质": 2
+          },
+          "translations": {
+            "pt-BR": "Qualidade",
+            "de-DE": "Qualität",
+            "ru-RU": "Качество",
+            "es-ES": "Calidad",
+            "fr-FR": "Qualité",
+            "en-US": "Quality"
+          }
+        },
+        {
+          "id": "quality_graphics",
+          "label": "画质设置",
+          "keys": [
+            "graphics",
+            "video",
+            "settings",
+            "render"
+          ],
+          "screens": [
+            "settings",
+            "graphics",
+            "video"
+          ],
+          "components": [
+            "option",
+            "row",
+            "slider"
+          ],
+          "neighbors": [
+            "Graphics",
+            "Video",
+            "Resolution",
+            "画质",
+            "分辨率",
+            "特效"
+          ],
+          "cotext": [
+            "graphics",
+            "video",
+            "resolution",
+            "render"
+          ],
+          "alias_bias": {
+            "画质": 3
+          },
+          "translations": {
+            "pt-BR": "Qualidade gráfica",
+            "de-DE": "Grafikqualität",
+            "ru-RU": "Качество графики",
+            "es-ES": "Calidad gráfica",
+            "fr-FR": "Qualité graphique",
+            "en-US": "Graphics Quality"
+          }
+        }
+      ]
+    }
+  ]
+}

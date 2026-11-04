@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LingoGuard · 游戏本地化预检台</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">LG</div>
+      <div>
+        <h1>LingoGuard <span>本地化预检台</span></h1>
+        <p>课程级可运行原型 · 确定性检查为核心 · 不把“测过的模板”说成“已验证的语法”</p>
+      </div>
+    </div>
+    <div class="top-actions">
+      <span id="mode-badge" class="badge badge-live">确定性模式</span>
+      <button id="method-button" class="ghost" type="button">方法边界</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel input-panel">
+      <div class="panel-head">
+        <h2>输入</h2>
+        <span class="hint">JSON / JSONL / CSV / XLIFF</span>
+      </div>
+
+      <label class="field">
+        <span>示例数据集 <em>合成，可一键运行</em></span>
+        <div class="inline">
+          <select id="demo-select"></select>
+          <button id="load-demo" class="secondary" type="button">载入</button>
+        </div>
+      </label>
+
+      <div class="grid-2">
+        <label class="field">
+          <span>目标语言</span>
+          <select id="target-locale">
+            <option value="pt-BR">pt-BR 巴西葡语</option>
+            <option value="de-DE">de-DE 德语</option>
+            <option value="ru-RU">ru-RU 俄语</option>
+            <option value="es-ES">es-ES 西语</option>
+            <option value="fr-FR">fr-FR 法语</option>
+            <option value="en-US">en-US 英语</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>默认 UI 盒模型</span>
+          <select id="ui-profile">
+            <option value="mobile_dialog">mobile_dialog</option>
+            <option value="settings_tab">settings_tab</option>
+            <option value="inventory_cell">inventory_cell</option>
+            <option value="banner_title">banner_title</option>
+            <option value="tooltip">tooltip</option>
+            <option value="badge">badge</option>
+            <option value="micro_badge">micro_badge</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="field">
+        <span>输入格式</span>
+        <select id="format">
+          <option value="auto">auto</option>
+          <option value="json">JSON</option>
+          <option value="jsonl">JSONL</option>
+          <option value="csv">CSV</option>
+          <option value="xliff">XLIFF 1.2</option>
+        </select>
+      </label>
+
+      <label class="checkline">
+        <input id="llm-toggle" type="checkbox">
+        <span>LLM 语气建议 <em>可选，仅用于 REG001；未配置 API Key 时自动降级，不影响确定性检查</em></span>
+      </label>
+
+      <label class="field grow">
+        <span>批量文本 <em id="input-count"></em></span>
+        <textarea id="dataset-input" spellcheck="false" placeholder="粘贴 JSON / JSONL / CSV / XLIFF，或点击“载入”使用合成示例。"></textarea>
+      </label>
+
+      <div class="row">
+        <button id="analyze" class="primary" type="button">运行预检</button>
+        <label class="file-button" for="file-input">导入文件
+          <input id="file-input" type="file" accept=".json,.jsonl,.csv,.xliff,.xlf,.txt">
+        </label>
+      </div>
+
+      <div class="row exports">
+        <button class="ghost small" data-export="json" type="button" disabled>导出 JSON</button>
+        <button class="ghost small" data-export="csv" type="button" disabled>导出 CSV</button>
+        <button class="ghost small" data-export="xliff" type="button" disabled>导出 XLIFF</button>
+      </div>
+
+      <p class="note">数据只在本机内存中处理，不发送到第三方。示例中的项目、文案和 UI 尺寸均为合成数据。</p>
+    </aside>
+
+    <section class="results" aria-live="polite">
+      <div id="welcome" class="welcome">
+        <div class="welcome-mark">LG</div>
+        <h2>把“翻译完再进引擎撞运气”提前成可复现的预检</h2>
+        <p>输入源文、译文和项目已有的 key / screen / 相邻文案 / UI 盒模型，得到三类可追溯结果：</p>
+        <div class="welcome-grid">
+          <div><strong>模板完整性</strong><span>占位符保留、printf 重排、ICU plural 分类、富文本标签闭合</span></div>
+          <div><strong>宽度风险</strong><span>Pillow 真实字形测量 + 字符数基线对照，明确布局假设</span></div>
+          <div><strong>上下文证据</strong><span>消歧命中依据与置信度；证据不足时弃答，并把缺失问题列出来</span></div>
+        </div>
+        <p class="welcome-note">右侧会显示示例结果；也可在左侧粘贴自己的 CSV / XLIFF 批量数据。</p>
+      </div>
+
+      <div id="results-content" hidden>
+        <div id="summary" class="summary-grid"></div>
+        <div id="meta-strip" class="meta-strip"></div>
+
+        <div class="toolbar">
+          <div id="filters" class="filters" role="group" aria-label="筛选"></div>
+          <input id="search" type="search" placeholder="搜索 id / 源文 / 译文">
+          <span id="result-count" class="hint"></span>
+        </div>
+
+        <div id="unit-list" class="unit-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>LingoGuard 0.1 · 课程设计原型</span>
+    <span>核心闭环可测试；术语消歧、源文缺口与修辞标记标为实验性。无厂商访谈与竞品 A/B 数据，不声称商业突破。</span>
+  </footer>
+
+  <div id="method-modal" class="modal" hidden>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="method-title">
+      <div class="modal-head">
+        <h2 id="method-title">方法边界与已知限制</h2>
+        <button id="method-close" class="ghost" type="button" aria-label="关闭">关闭</button>
+      </div>
+      <div id="method-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

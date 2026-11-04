@@ -1,0 +1,128 @@
+{
+  "project": "UI 多义词消歧（合成演示）",
+  "source_locale": "en-US",
+  "target_locale": "pt-BR",
+  "ui_profile": "mobile_dialog",
+  "synthetic": true,
+  "notice": "合成 UI 文案，用于展示同一源词在不同上下文中的不同译法与证据不足时的弃答。",
+  "strings": [
+    {
+      "id": "settings.tab.audio",
+      "source": "Settings",
+      "target": "Configurações",
+      "key": "settings.tab.audio",
+      "screen": "settings",
+      "component": "tab",
+      "neighbors": ["Graphics", "Audio", "Controls"],
+      "ui": {"profile": "settings_tab"}
+    },
+    {
+      "id": "lore.setting.entry",
+      "source": "Setting",
+      "target": "Configurações",
+      "key": "lore.world.codex",
+      "screen": "codex",
+      "component": "entry",
+      "neighbors": ["Lore", "World", "Story"]
+    },
+    {
+      "id": "leaderboard.rank",
+      "source": "Rank",
+      "target": "Classificação",
+      "key": "leaderboard.rank",
+      "screen": "leaderboard",
+      "component": "row",
+      "neighbors": ["Score", "Season", "Player"]
+    },
+    {
+      "id": "hero.rank",
+      "source": "Rank",
+      "target": "Patente",
+      "key": "hero.military.rank",
+      "screen": "character",
+      "component": "badge",
+      "neighbors": ["Promote", "Army", "Officer"]
+    },
+    {
+      "id": "inventory.rank",
+      "source": "Rank",
+      "target": "Qualidade",
+      "key": "inventory.item.rank",
+      "screen": "inventory",
+      "component": "cell",
+      "neighbors": ["Rare", "Epic", "Legendary"]
+    },
+    {
+      "id": "misc.rank_unknown",
+      "source": "Rank",
+      "target": "Classificação",
+      "key": "",
+      "screen": "",
+      "component": "",
+      "neighbors": []
+    },
+    {
+      "id": "daily.claim",
+      "source": "Claim",
+      "target": "Resgatar",
+      "key": "daily.reward.claim",
+      "screen": "daily",
+      "component": "button",
+      "neighbors": ["Reward", "Daily", "Mail"]
+    },
+    {
+      "id": "story.claim",
+      "source": "Claim",
+      "target": "Alegar",
+      "key": "story.dialog.claim",
+      "screen": "dialog",
+      "component": "line",
+      "neighbors": ["Witness", "Statement"]
+    },
+    {
+      "id": "ui.march_army",
+      "source": "March",
+      "target": "Marchar",
+      "key": "army.march",
+      "screen": "worldmap",
+      "component": "button",
+      "neighbors": ["Troop", "Campaign"]
+    },
+    {
+      "id": "calendar.march",
+      "source": "March",
+      "target": "Março",
+      "key": "calendar.event.march",
+      "screen": "event",
+      "component": "label",
+      "neighbors": ["January", "April"]
+    },
+    {
+      "id": "ui.party",
+      "source": "Party",
+      "target": "Equipe",
+      "key": "party.slot",
+      "screen": "party",
+      "component": "slot",
+      "neighbors": ["Team", "Dungeon"]
+    },
+    {
+      "id": "ui.quality_graphics",
+      "source": "Quality",
+      "target": "Qualidade gráfica",
+      "key": "graphics.video.quality",
+      "screen": "settings",
+      "component": "option",
+      "neighbors": ["Graphics", "Resolution"]
+    },
+    {
+      "id": "ui.dropdown",
+      "source": "Drop",
+      "target": "Menu suspenso",
+      "key": "filter.drop",
+      "screen": "filter",
+      "component": "select",
+      "neighbors": ["Select", "Sort"]
+    }
+  ]
+}
