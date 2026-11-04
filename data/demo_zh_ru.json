@@ -1,0 +1,62 @@
+{
+  "project": "俄语复数与长文本（合成演示）",
+  "source_locale": "zh-CN",
+  "target_locale": "ru-RU",
+  "ui_profile": "mobile_dialog",
+  "synthetic": true,
+  "notice": "合成俄语样例，展示 ICU plural 模板分类检查与西里尔字形宽度测量；译法仅作演示。",
+  "strings": [
+    {
+      "id": "inventory.items.count",
+      "source": "获得 {0} 个道具",
+      "target": "Получено {0, plural, one {# предмет} few {# предмета} many {# предметов}}"
+    },
+    {
+      "id": "inventory.items.count_ok",
+      "source": "获得 {0} 个道具",
+      "target": "Получено {0, plural, one {# предмет} few {# предмета} many {# предметов} other {# предмета}}"
+    },
+    {
+      "id": "settings.tab.graphics",
+      "source": "图形设置",
+      "target": "Настройки графики",
+      "key": "settings.tab.graphics",
+      "screen": "settings",
+      "component": "tab",
+      "ui": {"profile": "settings_tab"}
+    },
+    {
+      "id": "settings.tab.audio",
+      "source": "音频",
+      "target": "Звук",
+      "key": "settings.tab.audio",
+      "screen": "settings",
+      "component": "tab",
+      "ui": {"profile": "settings_tab"}
+    },
+    {
+      "id": "banner.winter",
+      "source": "冬季庆典限时开启",
+      "target": "Зимний фестиваль ограничен по времени",
+      "key": "event.winter.banner",
+      "screen": "event",
+      "component": "title",
+      "max_chars": 14,
+      "ui": {"profile": "banner_title"}
+    },
+    {
+      "id": "ui.march",
+      "source": "行军",
+      "target": "Маршировать",
+      "key": "army.march",
+      "screen": "worldmap",
+      "component": "button",
+      "neighbors": ["部队", "出征"]
+    },
+    {
+      "id": "placeholder.unknown",
+      "source": "前往 {0}",
+      "target": "Перейти в {0}"
+    }
+  ]
+}

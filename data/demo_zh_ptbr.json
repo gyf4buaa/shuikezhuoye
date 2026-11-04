@@ -1,0 +1,285 @@
+{
+  "project": "星海远征（合成演示项目）",
+  "source_locale": "zh-CN",
+  "target_locale": "pt-BR",
+  "ui_profile": "mobile_dialog",
+  "synthetic": true,
+  "notice": "全部文案与术语均为课程演示用合成数据，不是任何真实游戏或厂商资料。",
+  "strings": [
+    {
+      "id": "ui.common.confirm",
+      "source": "确认",
+      "target": "Confirmar",
+      "key": "common.confirm",
+      "screen": "dialog",
+      "component": "button"
+    },
+    {
+      "id": "settings.tab.audio",
+      "source": "音频",
+      "target": "Áudio",
+      "key": "settings.tab.audio",
+      "screen": "settings",
+      "component": "tab",
+      "neighbors": [
+        "设置",
+        "画面",
+        "操作"
+      ],
+      "ui": {
+        "profile": "settings_tab"
+      }
+    },
+    {
+      "id": "settings.tab.settings",
+      "source": "设置",
+      "target": "Configurações",
+      "key": "settings.tab.settings",
+      "screen": "settings",
+      "component": "tab",
+      "neighbors": [
+        "画面",
+        "音频",
+        "操作"
+      ],
+      "max_chars": 12,
+      "ui": {
+        "profile": "settings_tab"
+      }
+    },
+    {
+      "id": "settings.tab.sensitivity",
+      "source": "灵敏度",
+      "target": "Sensibilidade",
+      "key": "settings.tab.sensitivity",
+      "screen": "settings",
+      "component": "tab",
+      "ui": {
+        "profile": "settings_tab"
+      }
+    },
+    {
+      "id": "status.unlock",
+      "source": "解锁",
+      "target": "Desbloquear",
+      "key": "hero.skill.unlock",
+      "screen": "hero_detail",
+      "component": "label"
+    },
+    {
+      "id": "dialogue.next_level",
+      "source": "点击确认后，将进入下一关",
+      "target": "Após confirmar, você avançará para a próxima fase.",
+      "key": "dialog.next_level",
+      "screen": "dialog",
+      "component": "body",
+      "max_chars": 40
+    },
+    {
+      "id": "hero.intro",
+      "source": "这个英雄，血量不高，防御一般，但技能很强",
+      "target": "Este herói tem pouca vida, defesa mediana, mas habilidades poderosas.",
+      "key": "hero.intro",
+      "screen": "hero_detail",
+      "component": "body",
+      "max_chars": 30
+    },
+    {
+      "id": "inventory.claim",
+      "source": "领取奖励",
+      "target": "Resgatar recompensa",
+      "key": "daily.reward.claim",
+      "screen": "daily",
+      "component": "button",
+      "neighbors": [
+        "每日",
+        "邮件",
+        "任务"
+      ]
+    },
+    {
+      "id": "mail.claim_all",
+      "source": "领取 {0} 封邮件附件",
+      "target": "Resgatar anexos de {0} e-mails",
+      "key": "mail.claim_all",
+      "screen": "mail",
+      "component": "button"
+    },
+    {
+      "id": "battle.drop_rate",
+      "source": "掉落概率 {0}%",
+      "target": "Chance de saque: {0}%",
+      "key": "dungeon.drop_rate",
+      "screen": "battle",
+      "component": "label",
+      "neighbors": [
+        "掉落",
+        "战利品",
+        "副本"
+      ]
+    },
+    {
+      "id": "ui.rank.leaderboard",
+      "source": "排名",
+      "target": "Classificação",
+      "key": "leaderboard.rank",
+      "screen": "leaderboard",
+      "component": "row",
+      "neighbors": [
+        "积分",
+        "赛季"
+      ]
+    },
+    {
+      "id": "hero.rank",
+      "source": "军衔",
+      "target": "Patente",
+      "key": "hero.military.rank",
+      "screen": "character",
+      "component": "badge",
+      "neighbors": [
+        "晋升",
+        "军队"
+      ]
+    },
+    {
+      "id": "item.quality",
+      "source": "品质",
+      "target": "Qualidade",
+      "key": "inventory.item.quality",
+      "screen": "inventory",
+      "component": "cell",
+      "neighbors": [
+        "稀有",
+        "史诗"
+      ]
+    },
+    {
+      "id": "lore.world_setting",
+      "source": "世界观设定",
+      "target": "Configurações",
+      "key": "lore.world",
+      "screen": "codex",
+      "component": "entry",
+      "neighbors": [
+        "剧情",
+        "编年史"
+      ]
+    },
+    {
+      "id": "ui.march",
+      "source": "行军",
+      "target": "Marchar",
+      "key": "army.march",
+      "screen": "worldmap",
+      "component": "button",
+      "neighbors": [
+        "部队",
+        "出征"
+      ]
+    },
+    {
+      "id": "calendar.march",
+      "source": "三月",
+      "target": "Março",
+      "key": "calendar.march",
+      "screen": "event",
+      "component": "label",
+      "neighbors": [
+        "一月",
+        "二月"
+      ]
+    },
+    {
+      "id": "news.patch_drop",
+      "source": "全新版本上线！",
+      "target": "Lançamento da nova versão!",
+      "key": "news.patch",
+      "screen": "announcement",
+      "component": "title"
+    },
+    {
+      "id": "placeholders.missing",
+      "source": "获得 {0} 金币和 {1} 经验",
+      "target": "Obteve {0} moedas"
+    },
+    {
+      "id": "placeholders.extra",
+      "source": "前往 {0}",
+      "target": "Vá para {0} e {1}"
+    },
+    {
+      "id": "placeholders.printf",
+      "source": "获得 %s 金币，持续 %d 秒",
+      "target": "Obteve %d moedas por %s segundos"
+    },
+    {
+      "id": "placeholders.icu_missing",
+      "source": "{count} 个新消息",
+      "target": "{count, plural, one {# nova mensagem}}"
+    },
+    {
+      "id": "tags.imbalance",
+      "source": "<b>稀有</b>装备",
+      "target": "<b>Equipamento raro"
+    },
+    {
+      "id": "register.sarcasm",
+      "source": "Oh, great.",
+      "target": "Ah, ótimo.",
+      "key": "dialog.hero.sarcasm",
+      "screen": "dialog",
+      "component": "line"
+    },
+    {
+      "id": "register.meme",
+      "source": "这次更新真香",
+      "target": "Esta atualização é muito boa.",
+      "key": "news.update_reaction",
+      "screen": "news",
+      "component": "body"
+    },
+    {
+      "id": "long.banner",
+      "source": "冬季庆典限时开启",
+      "target": "Festival de Inverno por tempo limitado",
+      "key": "event.winter.banner",
+      "screen": "event",
+      "component": "title",
+      "max_chars": 12,
+      "ui": {
+        "profile": "banner_title"
+      }
+    },
+    {
+      "id": "event.year",
+      "source": "2025",
+      "target": "MMXXV",
+      "key": "event.winter.year",
+      "screen": "event",
+      "component": "badge",
+      "ui": {
+        "profile": "badge"
+      }
+    },
+    {
+      "id": "map.island",
+      "source": "岛屿",
+      "target": "Ilha",
+      "key": "map.island",
+      "screen": "worldmap",
+      "component": "badge",
+      "ui": {
+        "profile": "micro_badge"
+      }
+    },
+    {
+      "id": "empty.target",
+      "source": "继续",
+      "target": "",
+      "key": "common.continue",
+      "screen": "dialog",
+      "component": "button"
+    }
+  ]
+}

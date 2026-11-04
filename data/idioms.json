@@ -1,0 +1,48 @@
+{
+  "_notice": "合成语气/修辞示例库，仅用于课程演示，不是厂商数据。命中只表示需要人工确认策略，不代表工具给出了译文。",
+  "entries": [
+    {
+      "id": "sarcasm_oh_great",
+      "pattern": "Oh, great.",
+      "case_insensitive": true,
+      "type": "sarcasm",
+      "strategy": "改写/语气重构",
+      "note": "字面是称赞，语境中可能表示反讽；需要说话者态度、场景和语气。"
+    },
+    {
+      "id": "meme_zhenxiang",
+      "pattern": "真香",
+      "type": "meme",
+      "strategy": "归化改写",
+      "note": "中文网络梗，直译会丢失反差与幽默；需要目标语社区对应表达。"
+    },
+    {
+      "id": "jargon_kerjin",
+      "pattern": "氪金",
+      "type": "jargon",
+      "strategy": "意译/社区惯用语",
+      "note": "玩家黑话，直译为“spend money”会丢失付费语境。"
+    },
+    {
+      "id": "marketing_999",
+      "pattern": "一刀999",
+      "type": "marketing",
+      "strategy": "改写",
+      "note": "夸张营销口号，数字和“一刀”在目标语中不构成同义夸张。"
+    },
+    {
+      "id": "slang_666",
+      "pattern": "666",
+      "type": "slang",
+      "strategy": "归化",
+      "note": "中文网络赞叹语，不是数量；直译成数字会误导。"
+    },
+    {
+      "id": "slang_wenru_gou",
+      "pattern": "稳如老狗",
+      "type": "slang",
+      "strategy": "归化",
+      "note": "中文俚语，含粗俗/调侃色彩，需按分级与角色口吻改写。"
+    }
+  ]
+}
