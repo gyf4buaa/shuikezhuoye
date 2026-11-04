@@ -49,6 +49,7 @@ class FakeTransport:
             raise LiveError("HTTP 500: simulated")
         return {
             "id": "resp-test",
+            "model": payload["model"],
             "choices": [{"message": {"content": self.content}, "finish_reason": "stop"}],
             "usage": self.usage,
         }
