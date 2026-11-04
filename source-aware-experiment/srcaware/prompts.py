@@ -142,7 +142,7 @@ def truncate_evidence_for_budget(prompt: Prompt, max_chars: int) -> Prompt:
     )
 
 
-CJK_RE = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]")
+CJK_RE = re.compile(r"[\u3000-\u303f\u3400-\u4dbf\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af\uff00-\uffef]")
 
 
 def assert_no_target_language(prompt: Prompt) -> None:
