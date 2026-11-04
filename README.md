@@ -22,7 +22,7 @@ python3 app.py --port 8000
 python3 -m unittest discover -s tests -v
 ```
 
-当前 103 个测试通过（2026-11-04，Python 3.9.6 / Pillow 11.3.0）。实际输出见 [docs/测试报告.md](docs/测试报告.md)。
+当前 104 个测试通过（2026-11-04，Python 3.9.6 / Pillow 11.3.0）。实际输出见 [docs/测试报告.md](docs/测试报告.md)。
 
 ## 2. 演示入口
 
@@ -171,7 +171,7 @@ python3 app.py --port 8000
 
 ## 8. 测试与证据
 
-- 单元/集成/API/CLI：`python3 -m unittest discover -s tests -v`（103 tests）。
+- 单元/集成/API/CLI：`python3 -m unittest discover -s tests -v`（104 tests）。
 - 手工浏览器验证：在 Chrome 中载入 `zh_ptbr` 后，28 条 unit、6 张汇总卡、筛选/搜索/方法弹窗正常；对 `settings.tab.settings`，浏览器 DOM 实测与 Pillow 判定一致（均溢出），页面无横向滚动。
 - 截图与对比：[`docs/evidence/`](docs/evidence/)；PR 描述含 Before/After 和基线说明。
 
@@ -184,7 +184,7 @@ web/                      # 无构建的前端
 data/                     # 合成演示数据、义项库、UI profile
 assets/fonts/             # Noto Sans + OFL 许可证
 scripts/check.py          # 可复现批量导入 → 检查 → 导出
-tests/                    # 103 个测试
+tests/                    # 104 个测试
 docs/                     # 方案比较、测试报告、演示脚本、接入说明、证据图
 ```
 

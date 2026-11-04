@@ -97,6 +97,10 @@ b,确认,Confirmar,common.confirm,dialog,button,,,,
         with self.assertRaises(DatasetError):
             build_dataset({"strings": [{"id": "a", "target": "y"}]})
 
+    def test_ui_must_be_object(self):
+        with self.assertRaises(DatasetError):
+            build_dataset({"strings": [{"id": "a", "source": "x", "target": "y", "ui": "settings_tab"}]})
+
     def test_unknown_profile_rejected(self):
         with self.assertRaises(DatasetError):
             build_dataset(

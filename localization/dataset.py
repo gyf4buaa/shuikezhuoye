@@ -316,11 +316,14 @@ def build_dataset(payload: Any, overrides: Optional[Dict[str, Any]] = None) -> D
         component = _as_text(raw.get("component", ""), "component", where).strip()
         neighbors = _parse_neighbors(raw.get("neighbors"), where)
         max_chars = _as_int(raw.get("max_chars"), "max_chars", where, minimum=1)
-        ui_override = raw.get("ui") or {}
+        ui_raw = raw.get("ui")
+        if ui_raw is not None and not isinstance(ui_raw, dict):
+            raise DatasetError("%s 的 ui 必须是对象" % where)
+        ui_override = ui_raw or {}
         profile = ui_profile
-        if isinstance(ui_override, dict) and ui_override.get("profile"):
+        if ui_override.get("profile"):
             profile = _as_text(ui_override.get("profile"), "ui.profile", where)
-        spec = _resolve_ui(profile, ui_override if isinstance(ui_override, dict) else None, where)
+        spec = _resolve_ui(profile, ui_override, where)
         units.append(
             StringUnit(
                 id=unit_id,

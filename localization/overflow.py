@@ -213,7 +213,7 @@ def measure(unit: StringUnit) -> Dict[str, Any]:
             "kind": (
                 "none"
                 if naive["fits"] == (not actual_overflow)
-                else ("false_positive" if naive["fits"] and actual_overflow else "false_negative")
+                else ("false_negative" if naive["fits"] and actual_overflow else "false_positive")
             ),
         },
     }

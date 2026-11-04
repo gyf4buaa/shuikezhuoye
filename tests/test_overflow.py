@@ -35,6 +35,7 @@ class OverflowTests(unittest.TestCase):
         self.assertTrue(result["supported"])
         self.assertFalse(result["measured"]["overflow"])
         self.assertTrue(result["naive"]["fits"])
+        self.assertEqual(result["disagreement"]["kind"], "none")
 
     def test_real_overflow(self):
         unit = make_unit("Configurações")
@@ -57,6 +58,7 @@ class OverflowTests(unittest.TestCase):
         self.assertTrue(result["measured"]["overflow"])
         self.assertTrue(result["naive"]["fits"])
         self.assertIn("OVF004", issues)
+        self.assertEqual(result["disagreement"]["kind"], "false_negative")
 
     def test_char_baseline_false_positive(self):
         unit = make_unit("Ilha", profile="micro_badge", font_size=14, box_w=38, box_h=26, padding=4, line_height=1.2)
@@ -65,6 +67,7 @@ class OverflowTests(unittest.TestCase):
         self.assertFalse(result["naive"]["fits"])
         self.assertIn("OVF005", issues)
         self.assertNotIn("OVF001", issues)
+        self.assertEqual(result["disagreement"]["kind"], "false_positive")
 
     def test_wrapping_fits_two_lines(self):
         unit = make_unit(
