@@ -212,7 +212,7 @@ prompts_built=99
 live_calls=0
 ```
 
-真实模型实验 **未执行**：本机没有 `SOURCEAWARE_API_KEY`，也没有提供其他兼容 endpoint。没有模拟调用、没有伪造翻译、没有用离线模板冒充模型输出。因此：
+真实模型实验 **未执行**：执行主机没有 `SOURCEAWARE_API_KEY`。OpenCode Console 端点的无凭据探测只确认了 URL 可达、缺少 Authorization 时返回 `401 Missing API key`；没有发送任何有效凭据，也没有发生模型推理。没有模拟调用、没有伪造翻译、没有用离线模板冒充模型输出。因此：
 
 | 指标 | 状态 |
 |---|---|
@@ -230,13 +230,25 @@ live_calls=0
 # 没有 key 时：退出码 2，不写任何文件，不发起请求
 python3 scripts/evaluate.py --corpus .corpus/openttd-15.3 --out runs/live-1 --live
 
-# 有 key 时（示例；本报告没有执行）
+# OpenCode Console：先用 3 个 case 做最小 smoke，唯一输出目录；Key 只从本地环境变量读取
+OUT="runs/live-opencode-$(date -u +%Y%m%dT%H%M%SZ)"
 SOURCEAWARE_API_KEY=... python3 scripts/evaluate.py \
-  --corpus .corpus/openttd-15.3 --out runs/live-1 --live \
-  --model deepseek-chat \
-  --max-total-tokens 20000 \
-  --input-price-per-1k 0.0001 --output-price-per-1k 0.0002
+  --corpus .corpus/openttd-15.3 --out "$OUT" --live \
+  --base-url https://opencode.ai/inference/openai/v1 \
+  --model deepseek-v4.1-flash \
+  --case-ids placeholder.plane_crash,same_text.cargo_plural,dynamic.colour_pale_green \
+  --max-total-tokens 12000 --max-calls 9
+
+# smoke 确认有真实 usage 且无 parse/transport 错误后，再扩到 33 条
+OUT="runs/live-opencode-full-$(date -u +%Y%m%dT%H%M%SZ)"
+SOURCEAWARE_API_KEY=... python3 scripts/evaluate.py \
+  --corpus .corpus/openttd-15.3 --out "$OUT" --live \
+  --base-url https://opencode.ai/inference/openai/v1 \
+  --model deepseek-v4.1-flash \
+  --max-total-tokens 80000 --max-calls 99
 ```
+
+`--case-ids`/`--limit-cases` 只缩小本次 case 集合；system prompt、A/B/C 内容和 target 不变。CLI 会打印 `live_executed`、真实响应数、usage 计数、首条 usage/latency/cost；没有 Key 时不会创建输出目录。
 
 硬约束：`--live` 必须同时有 key 和正数 `--max-total-tokens`；每一轮先做 token 预检，超预算或请求数上限就停止并保留部分结果（`aborted: true`）；HTTP/网络错误记录为 `transport_error` 后停止；JSON 解析失败记录为 `parse_error`，不做二次“修复”调用。价格不提供时费用为 `null`。
 

@@ -66,6 +66,8 @@ from srcaware.prompts import (  # noqa: E402
 DEFAULT_BASE_URL = "https://api.deepseek.com/v1"
 DEFAULT_MODEL = "deepseek-chat"
 API_KEY_ENV = "SOURCEAWARE_API_KEY"
+OPENCODE_BASE_URL = "https://opencode.ai/inference/openai/v1"
+OPENCODE_MODEL = "deepseek-v4.1-flash"
 
 
 def prompt_sha256(prompt: Prompt) -> str:
@@ -254,6 +256,7 @@ def write_dry_run(
         locator_summary,
         checks,
     )
+    manifest["dataset"]["selected_case_ids"] = [record.case.id for record in records]
     manifest["totals"] = {
         "cases": len(records),
         "prompts_built": len(records) * 3,
@@ -299,6 +302,7 @@ def run_live(
         locator_summary,
         checks,
     )
+    manifest["dataset"]["selected_case_ids"] = [record.case.id for record in records]
     manifest["model"] = {
         "base_url": config.base_url,
         "model": config.model,
@@ -426,8 +430,10 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--corpus", required=True)
     parser.add_argument("--cases", default=str(ROOT / "audit" / "cases.json"))
-    parser.add_argument("--out", required=True)
+    parser.add_argument("--out", default=None, help="unique result directory; auto-created under runs/ if omitted")
     parser.add_argument("--target", default="zh-CN")
+    parser.add_argument("--case-ids", default="", help="comma-separated audit case IDs for a smoke run")
+    parser.add_argument("--limit-cases", type=int, default=0, help="keep at most N cases after filtering")
     parser.add_argument("--dry-run", action="store_true", help="explicit no-network mode (default)")
     parser.add_argument("--live", action="store_true", help="call the configured model endpoint")
     parser.add_argument("--model", default=DEFAULT_MODEL)
@@ -448,11 +454,29 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
     mode = "live" if args.live else "dry_run"
     corpus_path = Path(args.corpus).expanduser().resolve()
     cases_path = Path(args.cases).expanduser().resolve()
-    out_dir = Path(args.out).expanduser().resolve()
     corpus, corpus_meta = load_corpus(corpus_path)
     dataset_sha = file_sha256(cases_path)
     records, data, locator_summary = prepare_records(
         corpus, cases_path, args.target, args.max_context_chars
+    )
+    if args.case_ids:
+        wanted = [item.strip() for item in args.case_ids.split(",") if item.strip()]
+        known = {record.case.id for record in records}
+        missing = [item for item in wanted if item not in known]
+        if missing:
+            parser.error(f"unknown case id(s): {', '.join(missing)}")
+        wanted_set = set(wanted)
+        records = [record for record in records if record.case.id in wanted_set]
+    if args.limit_cases:
+        if args.limit_cases < 1:
+            parser.error("--limit-cases must be positive")
+        records = records[: args.limit_cases]
+    if not records:
+        parser.error("no cases selected")
+    out_dir = (
+        Path(args.out).expanduser().resolve()
+        if args.out
+        else (ROOT / "runs" / new_run_id(mode, dataset_sha)).resolve()
     )
 
     if mode == "dry_run":
@@ -522,10 +546,25 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         budget,
     )
     print(
-        f"live run wrote {manifest['totals']['responses_recorded']} responses to {out_dir}; "
-        f"aborted={manifest['aborted']} tokens={manifest['budget']['total_tokens']}"
+        f"live_executed={manifest['live_executed']} model={manifest['model']['model']} "
+        f"responses={manifest['totals']['responses_recorded']} "
+        f"ok={manifest['totals']['ok']} parse_errors={manifest['totals']['parse_errors']} "
+        f"transport_errors={manifest['totals']['transport_errors']} "
+        f"aborted={manifest['aborted']} tokens={manifest['budget']['total_tokens']} "
+        f"cost_usd={manifest['budget']['cost_usd']}"
     )
-    return 0 if not manifest["aborted"] else 3
+    first_path = out_dir / "results.jsonl"
+    if first_path.is_file():
+        with first_path.open("r", encoding="utf-8") as handle:
+            first_line = handle.readline()
+        if first_line:
+            first = json.loads(first_line)
+            print(
+                f"first_response status={first.get('status')} "
+                f"usage={first.get('usage')} latency_ms={first.get('latency_ms')} "
+                f"cost_usd={first.get('cost_usd')}"
+            )
+    return 0 if not manifest["aborted"] and manifest["totals"]["parse_errors"] == 0 else 3
 
 
 if __name__ == "__main__":

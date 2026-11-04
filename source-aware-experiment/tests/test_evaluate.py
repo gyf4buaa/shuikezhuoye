@@ -94,6 +94,24 @@ class DryRunTests(unittest.TestCase):
             review = (out / "review_template.csv").read_text(encoding="utf-8").splitlines()
             self.assertEqual(len(review), 10)
 
+    def test_case_selection_reduces_prompts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "run"
+            code = evaluate.main(
+                [
+                    "--corpus", str(FIXTURE),
+                    "--cases", str(CASES),
+                    "--out", str(out),
+                    "--case-ids", "tiny.alpha,tiny.missing",
+                    "--dry-run",
+                ]
+            )
+            self.assertEqual(code, 0)
+            manifest = json.loads((out / "manifest.json").read_text(encoding="utf-8"))
+            self.assertEqual(manifest["dataset"]["cases"], 2)
+            self.assertEqual(manifest["dataset"]["selected_case_ids"], ["tiny.alpha", "tiny.missing"])
+            self.assertEqual(manifest["totals"]["prompts_built"], 6)
+
     def test_live_without_key_does_not_create_output(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "run"

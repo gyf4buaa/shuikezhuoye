@@ -108,7 +108,39 @@ SOURCEAWARE_API_KEY=... python3 scripts/evaluate.py \
   --model deepseek-chat --max-total-tokens 20000
 ```
 
-`--live` without a key exits 2 and writes nothing. The run is aborted on a
+`--live` without a key exits 2 and writes nothing. The key is read only from
+the named environment variable; it is never written to a run directory, a
+manifest, a result row or an error message.
+
+For the OpenCode Console endpoint (`deepseek-v4.1-flash`), use a unique output
+directory and a three-case smoke run first:
+
+```bash
+OUT="runs/live-opencode-$(date -u +%Y%m%dT%H%M%SZ)"
+SOURCEAWARE_API_KEY=... python3 scripts/evaluate.py \
+  --corpus .corpus/openttd-15.3 --out "$OUT" --live \
+  --base-url https://opencode.ai/inference/openai/v1 \
+  --model deepseek-v4.1-flash \
+  --case-ids placeholder.plane_crash,same_text.cargo_plural,dynamic.colour_pale_green \
+  --max-total-tokens 12000 --max-calls 9
+```
+
+Only after that smoke run reports real `usage` and no parse/transport error,
+expand to the audited 33 cases with a larger explicit budget:
+
+```bash
+OUT="runs/live-opencode-full-$(date -u +%Y%m%dT%H%M%SZ)"
+SOURCEAWARE_API_KEY=... python3 scripts/evaluate.py \
+  --corpus .corpus/openttd-15.3 --out "$OUT" --live \
+  --base-url https://opencode.ai/inference/openai/v1 \
+  --model deepseek-v4.1-flash \
+  --max-total-tokens 80000 --max-calls 99
+```
+
+The CLI prints `live_executed`, model, response/usage/parse/transport counts and
+the first real response's `usage`, latency and cost. `--case-ids` and
+`--limit-cases` are for smoke runs; they do not change system prompts or arm
+content. The run is aborted on a
 transport error or when the next request would exceed the token/call budget;
 partial results and `aborted: true` are preserved. Prices are optional; without
 them `cost_usd` is `null` rather than guessed. No live call was made here, so
