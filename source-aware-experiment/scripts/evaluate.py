@@ -52,7 +52,7 @@ from srcaware.live import (  # noqa: E402
     MissingApiKey,
     Transport,
     chat,
-    estimate_tokens,
+    estimate_messages_tokens,
     parse_translation,
 )
 from srcaware.openttd import OpenTTDLocator  # noqa: E402
@@ -320,7 +320,7 @@ def run_live(
             for record in records:
                 for arm in ("A", "B", "C"):
                     prompt = record.prompts[arm]
-                    estimate = estimate_tokens(prompt.system + "\n" + prompt.user) + config.max_output_tokens
+                    estimate = estimate_messages_tokens(prompt.messages()) + config.max_output_tokens
                     try:
                         budget.preflight(estimate)
                     except BudgetExceeded as exc:
@@ -338,15 +338,19 @@ def run_live(
                         "retrieval_status": record.bundle.status,
                     }
                     try:
+                        budget.start_call()
                         result: ChatResult = chat(prompt.messages(), config, transport)
                     except LiveError as exc:
+                        budget.record_failure(fallback_tokens=estimate)
                         row.update(
                             {
                                 "status": "transport_error",
                                 "error": str(exc)[:500],
                                 "translation": None,
-                                "usage": None,
-                                "latency_ms": None,
+                                "usage": exc.usage,
+                                "latency_ms": round(exc.latency_ms, 1) if exc.latency_ms is not None else None,
+                                "model": exc.model,
+                                "raw_response": exc.raw_response,
                             }
                         )
                         responses.append(row)
@@ -356,9 +360,12 @@ def run_live(
                         break
                     translation, parse_error = parse_translation(result.text)
                     budget.record(result, fallback_tokens=estimate)
+                    usage_valid = result.prompt_tokens is not None and result.completion_tokens is not None
+                    truncated = result.finish_reason == "length"
+                    status = "usage_missing" if not usage_valid else ("truncated" if truncated else ("ok" if parse_error is None else "parse_error"))
                     row.update(
                         {
-                            "status": "ok" if parse_error is None else "parse_error",
+                            "status": status,
                             "translation": translation,
                             "parse_error": parse_error,
                             "raw_response": result.text[:4000],
@@ -366,11 +373,20 @@ def run_live(
                             "latency_ms": round(result.latency_ms, 1),
                             "finish_reason": result.finish_reason,
                             "provider_response_id": result.raw_id,
+                            "model": result.model,
                             "cost_usd": _call_cost(result, config),
                         }
                     )
                     responses.append(row)
                     handle.write(json.dumps(row, ensure_ascii=False) + "\n")
+                    if not usage_valid:
+                        aborted = True
+                        abort_reason = "provider response omitted prompt/completion usage"
+                        break
+                    if truncated:
+                        aborted = True
+                        abort_reason = "provider response was truncated (finish_reason=length)"
+                        break
                     try:
                         budget.check_after_call()
                     except BudgetExceeded as exc:
@@ -392,6 +408,8 @@ def run_live(
             "transport_errors": sum(
                 1 for row in responses if row["status"] == "transport_error"
             ),
+            "usage_missing": sum(1 for row in responses if row["status"] == "usage_missing"),
+            "truncated": sum(1 for row in responses if row["status"] == "truncated"),
         }
         (out_dir / "manifest.json").write_text(
             json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"

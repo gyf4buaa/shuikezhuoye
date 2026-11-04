@@ -9,10 +9,11 @@ of a hand-built demo, and separates two questions:
 - **P1 (translation):** does adding that evidence to a model prompt improve
   translation over text-only (A) and text+key (B)?
 
-The real model experiment is **not executed** in this checkout: no API key was
-provided and no paid call was made. The dry run builds all three prompt arms,
-validates the leakage guards and writes a manual review sheet. It never
-fabricates a model answer, latency or cost.
+A live smoke request on 2026-11-04 reached OpenCode but returned HTTP 402; no
+model translation or usage was returned, and the full experiment was not run.
+See [the live attempt and preserved records](audit/OPENCODE_LIVE_2026-11-04.md).
+The dry run builds all three prompt arms, validates the leakage guards and
+writes a manual review sheet; it never fabricates a model answer, latency or cost.
 
 ## Quick start
 
@@ -143,7 +144,7 @@ the first real response's `usage`, latency and cost. `--case-ids` and
 content. The run is aborted on a
 transport error or when the next request would exceed the token/call budget;
 partial results and `aborted: true` are preserved. Prices are optional; without
-them `cost_usd` is `null` rather than guessed. No live call was made here, so
+them `cost_usd` is `null` rather than guessed. The documented live attempt returned HTTP 402 with no translation, so
 there is **no A/B/C translation-quality result**.
 
 The manual rubric is fixed before seeing outputs: `context_sense`,

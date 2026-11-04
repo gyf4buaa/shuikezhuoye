@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "run_id": "20261104T113730Z-live-1772f98a",
+  "created_at": "2026-11-04T11:37:30.715340+00:00",
+  "mode": "live",
+  "live_executed": true,
+  "prompt_version": "p1-v1",
+  "target_locale": "zh-CN",
+  "model": {
+    "base_url": "https://opencode.ai/inference/openai/v1",
+    "model": "deepseek-v4.1-flash",
+    "temperature": 0.0,
+    "max_output_tokens": 256,
+    "api_key": "[from environment; not recorded]"
+  },
+  "corpus": {
+    "project": "OpenTTD",
+    "version": "15.3",
+    "commit": "14ec60f248547d4d062a1160f0fc26d742319888",
+    "license": "GPL-2.0",
+    "license_file": "COPYING.md",
+    "repo_url": "https://github.com/OpenTTD/OpenTTD",
+    "archive_url": "https://codeload.github.com/OpenTTD/OpenTTD/tar.gz/14ec60f248547d4d062a1160f0fc26d742319888",
+    "archive_sha256": "df5962cf5fc4938171607a40db69585e2fe3a2a8c8cfe2831862c9e61ff107d7",
+    "extracted_directory": "OpenTTD-14ec60f248547d4d062a1160f0fc26d742319888",
+    "string_table": "src/lang/english.txt",
+    "why_this_project": "A real, mature GPL-2.0 game with a large keyed string table (4721 StringIDs) and source references spread across C++, INI settings templates and base-set metadata. It exercises exact-token, macro, settings-range and computed-StringID retrieval in one pinned checkout, and its translated tables let us test leakage denial.",
+    "not_vendored": "The corpus is downloaded into .corpus/ (gitignored). This repository stores only short evidence quotations with path:line attribution."
+  },
+  "dataset": {
+    "path": "source-aware-experiment/audit/cases.json",
+    "sha256": "1772f98a37bfb4c62a416edc730351c687dcd1065e35d692e8f25486e6e54701",
+    "cases": 3,
+    "prompts": 9,
+    "selected_case_ids": [
+      "placeholder.plane_crash",
+      "same_text.cargo_plural",
+      "dynamic.colour_pale_green"
+    ]
+  },
+  "locator": {
+    "project": "OpenTTD",
+    "keys": 4721,
+    "evidence_files": 1324,
+    "cargo_keys": 128,
+    "settings_keys": 247,
+    "family_keys": 139,
+    "vehicle_name_partial_bases": 4,
+    "status_counts": {
+      "arithmetic": 124,
+      "direct": 3795,
+      "dynamic_unresolved": 252,
+      "macro": 120,
+      "missing": 355,
+      "settings": 75
+    }
+  },
+  "leakage_checks": {
+    "evidence_paths_allowlisted": true,
+    "offending_evidence_ids": [],
+    "no_target_language_in_prompts": true,
+    "string_table_read": "src/lang/english.txt only",
+    "target_language_tables_read": [],
+    "note": "The corpus reader denies every src/lang file except the English source table; retrieval never touches translated tables. Prompts are additionally scanned for CJK text."
+  },
+  "totals": {
+    "cases": 3,
+    "prompts_built": 9,
+    "responses_recorded": 1,
+    "ok": 0,
+    "parse_errors": 0,
+    "transport_errors": 1,
+    "usage_missing": 0,
+    "truncated": 0
+  },
+  "budget": {
+    "max_total_tokens": 12000,
+    "max_calls": 9,
+    "calls": 0,
+    "prompt_tokens": 0,
+    "completion_tokens": 0,
+    "total_tokens": 0,
+    "unknown_usage_calls": 0,
+    "unknown_estimated_tokens": 0,
+    "input_price_per_1k": 0.0003,
+    "output_price_per_1k": 0.0012,
+    "cost_usd": 0.0
+  },
+  "aborted": true,
+  "abort_reason": "transport error: HTTP 402"
+}

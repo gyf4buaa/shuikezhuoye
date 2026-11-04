@@ -14,10 +14,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from srcaware.live import LiveConfig, chat
+from srcaware.live import LiveConfig, LiveError, chat, estimate_messages_tokens
 
 
 class RequestShapeTests(unittest.TestCase):
+    def test_utf8_preflight_counts_bytes_and_message_overhead(self) -> None:
+        messages = [{"role": "user", "content": "你好"}]
+        self.assertGreaterEqual(estimate_messages_tokens(messages), len("user你好".encode("utf-8")) + 48)
+
     def test_opencode_request_shape(self) -> None:
         captured = {}
 
@@ -43,11 +47,46 @@ class RequestShapeTests(unittest.TestCase):
         )
         self.assertEqual(captured["url"], "https://opencode.ai/inference/openai/v1/chat/completions")
         self.assertEqual(captured["headers"]["Authorization"], "Bearer test-key-not-a-real-credential")
+        self.assertEqual(captured["headers"]["User-Agent"], "opencode/1.0")
         self.assertEqual(captured["payload"]["model"], "deepseek-v4.1-flash")
         self.assertEqual(captured["payload"]["temperature"], 0.0)
         self.assertEqual(captured["payload"]["max_tokens"], 64)
         self.assertEqual(captured["payload"]["messages"][1]["role"], "user")
         self.assertEqual(result.total_tokens, 2)
+
+    def test_provider_model_is_recorded(self) -> None:
+        config = LiveConfig("https://example.invalid/v1", "key", "requested")
+        result = chat([], config, transport=lambda *args: {
+            "model": "provider-resolved-model",
+            "choices": [{"message": {"content": "ok"}, "finish_reason": "stop"}],
+            "usage": {"prompt_tokens": 1, "completion_tokens": 1},
+        })
+        self.assertEqual(result.model, "provider-resolved-model")
+
+    def test_transport_exception_does_not_echo_api_key_and_has_latency(self) -> None:
+        key = "key-that-must-not-leak"
+        config = LiveConfig("https://example.invalid/v1", key, "m")
+
+        def broken(*args):
+            raise RuntimeError("request failed for " + key)
+
+        with self.assertRaises(LiveError) as caught:
+            chat([], config, transport=broken)
+        self.assertNotIn(key, str(caught.exception))
+        self.assertIsNotNone(caught.exception.latency_ms)
+
+    def test_malformed_provider_response_keeps_safe_metadata(self) -> None:
+        key = "secret-key"
+        config = LiveConfig("https://example.invalid/v1", key, "requested")
+        with self.assertRaises(LiveError) as caught:
+            chat([], config, transport=lambda *args: {
+                "model": "resolved", "usage": {"prompt_tokens": 2},
+                "choices": [], "debug": key,
+            })
+        self.assertEqual(caught.exception.model, "resolved")
+        self.assertEqual(caught.exception.usage, {"prompt_tokens": 2})
+        self.assertNotIn(key, caught.exception.raw_response or "")
+        self.assertIsNotNone(caught.exception.latency_ms)
 
     def test_config_repr_hides_key(self) -> None:
         config = LiveConfig(

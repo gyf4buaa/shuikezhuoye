@@ -143,7 +143,7 @@ class LiveTests(unittest.TestCase):
             model="fake-model",
             max_output_tokens=32,
         )
-        budget = Budget(max_total_tokens=300, max_calls=9)
+        budget = Budget(max_total_tokens=2000, max_calls=9)
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "run"
             manifest = evaluate.run_live(
@@ -176,8 +176,10 @@ class LiveTests(unittest.TestCase):
             api_key="k",
             model="fake-model",
             max_output_tokens=32,
+            input_price_per_1k=0.001,
+            output_price_per_1k=0.002,
         )
-        budget = Budget(max_total_tokens=900, max_calls=1)
+        budget = Budget(max_total_tokens=2000, max_calls=1, input_price_per_1k=0.001, output_price_per_1k=0.002)
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp) / "run"
             manifest = evaluate.run_live(
@@ -205,8 +207,10 @@ class LiveTests(unittest.TestCase):
             api_key="k",
             model="fake-model",
             max_output_tokens=32,
+            input_price_per_1k=0.001,
+            output_price_per_1k=0.002,
         )
-        budget = Budget(max_total_tokens=900, max_calls=1)
+        budget = Budget(max_total_tokens=2000, max_calls=1, input_price_per_1k=0.001, output_price_per_1k=0.002)
         with tempfile.TemporaryDirectory() as tmp:
             manifest = evaluate.run_live(
                 corpus,
@@ -224,6 +228,10 @@ class LiveTests(unittest.TestCase):
             )
             self.assertEqual(manifest["totals"]["transport_errors"], 1)
             self.assertTrue(manifest["aborted"])
+            self.assertEqual(manifest["budget"]["calls"], 1)
+            self.assertIsNone(manifest["budget"]["cost_usd"])
+            self.assertEqual(manifest["budget"]["unknown_usage_calls"], 1)
+            self.assertEqual(transport.calls, 1)
 
     def test_cost_is_computed_when_prices_are_supplied(self) -> None:
         corpus, records = make_records()
@@ -237,7 +245,7 @@ class LiveTests(unittest.TestCase):
             output_price_per_1k=0.002,
         )
         budget = Budget(
-            max_total_tokens=900,
+            max_total_tokens=2000,
             max_calls=1,
             input_price_per_1k=0.001,
             output_price_per_1k=0.002,
@@ -269,7 +277,7 @@ class LiveTests(unittest.TestCase):
             model="fake-model",
             max_output_tokens=32,
         )
-        budget = Budget(max_total_tokens=300, max_calls=9)
+        budget = Budget(max_total_tokens=2000, max_calls=9)
         with tempfile.TemporaryDirectory() as tmp:
             manifest = evaluate.run_live(
                 corpus,
@@ -289,6 +297,32 @@ class LiveTests(unittest.TestCase):
             self.assertGreater(manifest["budget"]["unknown_estimated_tokens"], 0)
             self.assertIsNone(manifest["budget"]["cost_usd"])
             self.assertTrue(manifest["aborted"])
+            row = json.loads((Path(tmp) / "run" / "results.jsonl").read_text(encoding="utf-8").splitlines()[0])
+            self.assertEqual(row["status"], "usage_missing")
+            self.assertEqual(row["raw_response"], '{"translation": "阿尔法"}')
+            self.assertEqual(row["usage"], {})
+
+    def test_truncated_response_is_not_success(self) -> None:
+        corpus, records = make_records()
+        transport = FakeTransport()
+        def truncated(url, headers, payload, timeout):
+            data = transport(url, headers, payload, timeout)
+            data["model"] = "resolved-model"
+            data["choices"][0]["finish_reason"] = "length"
+            return data
+        config = LiveConfig("https://example.invalid/v1", "k", "fake-model")
+        with tempfile.TemporaryDirectory() as tmp:
+            manifest = evaluate.run_live(
+                corpus, json.loads((ROOT / "audit" / "corpus.json").read_text(encoding="utf-8")),
+                CASES, Path(tmp) / "run", records, "deadbeef", "zh-CN", {"keys": 47},
+                False, config, Budget(max_total_tokens=2000, max_calls=1), transport=truncated,
+            )
+            row = json.loads((Path(tmp) / "run" / "results.jsonl").read_text(encoding="utf-8").splitlines()[0])
+            self.assertEqual(row["status"], "truncated")
+            self.assertEqual(row["model"], "resolved-model")
+            self.assertTrue(manifest["aborted"])
+            self.assertEqual(manifest["totals"]["ok"], 0)
+            self.assertEqual(manifest["totals"]["truncated"], 1)
 
     def test_missing_key_config_is_rejected(self) -> None:
         with self.assertRaises(MissingApiKey):
